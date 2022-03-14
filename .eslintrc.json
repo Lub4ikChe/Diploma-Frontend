@@ -1,0 +1,71 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "extends": [
+    "prettier",
+    "airbnb", 
+    "plugin:react/recommended", 
+    "plugin:@typescript-eslint/recommended", 
+    "prettier/prettier",
+    "plugin:prettier/recommended"
+  ],
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "plugins": [
+    "react", 
+    "@typescript-eslint", 
+    "react-hooks"
+  ],
+  "rules": {
+    "max-len": ["error", { "code": 100 }],
+    "no-return-await": "error",
+    "no-use-before-define": "off",
+    "no-multiple-empty-lines": ["error", { "max": 1 }],
+    "import/prefer-default-export": "off",
+    "prefer-promise-reject-errors": ["off"],
+    "no-shadow": "off",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
+    "react/jsx-filename-extension": ["warn", { "extensions": [".tsx"] }],
+    "react/no-array-index-key": ["warn"],
+    "react/require-render-return": "error",
+    "react/self-closing-comp": "error",
+    "react/jsx-curly-brace-presence": ["error", { "props": "never", "children": "never" }],
+    "react/no-this-in-sfc": "error",
+    "react/prefer-read-only-props": "error",
+    "react/no-unescaped-entities": "off",
+    "react/prop-types": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "@typescript-eslint/no-use-before-define": ["error"],
+    "@typescript-eslint/no-shadow": ["error"],
+    "@typescript-eslint/no-unused-vars": ["error"],
+    "@typescript-eslint/no-explicit-any": ["off"],
+    "@typescript-eslint/explicit-module-boundary-types": ["off"],
+    "@typescript-eslint/explicit-function-return-type": [
+      "error",
+      {
+        "allowExpressions": true
+      }
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    }
+  }
+}
