@@ -48,6 +48,7 @@ const SignInForm: React.FC = () => {
             label="Email address"
             value={email}
             error={isFocused && !email.length}
+            // helperText={isFocused && !email.length && 'Incorrect entry.'}
             variant="filled"
             margin="normal"
             InputProps={{

@@ -7,6 +7,7 @@ import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded';
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 
 import { MenuItem } from './types';
+import { routerLinks } from '../../router/router-links.enum';
 
 export enum menuItemsText {
   HOME = 'Home',
@@ -20,14 +21,42 @@ export enum menuItemsText {
 }
 
 export const publicMenuItems: MenuItem[] = [
-  { text: menuItemsText.HOME, icon: <HomeRoundedIcon color="primary" /> },
-  { text: menuItemsText.TRACKS, icon: <AudiotrackRoundedIcon color="primary" /> },
-  { text: menuItemsText.ALBUMS, icon: <LibraryMusicRoundedIcon color="primary" /> },
-  { text: menuItemsText.AUTHORS, icon: <PeopleAltRoundedIcon color="primary" /> },
+  {
+    text: menuItemsText.HOME,
+    icon: <HomeRoundedIcon color="primary" />,
+    href: routerLinks.ROOT,
+  },
+  {
+    text: menuItemsText.TRACKS,
+    icon: <AudiotrackRoundedIcon color="primary" />,
+    href: routerLinks.TRACKS,
+  },
+  {
+    text: menuItemsText.ALBUMS,
+    icon: <LibraryMusicRoundedIcon color="primary" />,
+    href: routerLinks.ALBUMS,
+  },
+  {
+    text: menuItemsText.AUTHORS,
+    icon: <PeopleAltRoundedIcon color="primary" />,
+    href: routerLinks.AUTHORS,
+  },
 ];
 
 export const privateMenuItems: MenuItem[] = [
-  { text: menuItemsText.LIKED_TRACKS, icon: <FavoriteRoundedIcon color="primary" /> },
-  { text: menuItemsText.MY_TRACKS, icon: <AudiotrackRoundedIcon color="primary" /> },
-  { text: menuItemsText.MY_ALBUMS, icon: <LibraryMusicRoundedIcon color="primary" /> },
+  {
+    text: menuItemsText.LIKED_TRACKS,
+    icon: <FavoriteRoundedIcon color="primary" />,
+    href: routerLinks.LIKED_TRACKS,
+  },
+  {
+    text: menuItemsText.MY_TRACKS,
+    icon: <AudiotrackRoundedIcon color="primary" />,
+    href: routerLinks.MY_TRACKS,
+  },
+  {
+    text: menuItemsText.MY_ALBUMS,
+    icon: <LibraryMusicRoundedIcon color="primary" />,
+    href: routerLinks.MY_ALBUMS,
+  },
 ];

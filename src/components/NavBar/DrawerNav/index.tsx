@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -9,8 +10,15 @@ import LogoTitle from '../../LogoTitle';
 import { StyledToolBar, StyledDivider } from './styles';
 
 import { privateMenuItems, publicMenuItems } from '../data';
+import { routerLinks } from '../../../router/router-links.enum';
 
 const DrawerNav: React.FC = () => {
+  const navigate = useNavigate();
+  const isAuth = false;
+  const onItemClick = (href: routerLinks): void => {
+    navigate(href);
+  };
+
   return (
     <>
       <StyledToolBar>
@@ -18,8 +26,8 @@ const DrawerNav: React.FC = () => {
       </StyledToolBar>
       <StyledDivider />
       <List>
-        {publicMenuItems.map(({ text, icon }) => (
-          <ListItem key={text} button>
+        {publicMenuItems.map(({ text, icon, href }) => (
+          <ListItem key={text} button onClick={() => onItemClick(href)}>
             <ListItemIcon>{icon}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
@@ -27,8 +35,8 @@ const DrawerNav: React.FC = () => {
       </List>
       <StyledDivider />
       <List>
-        {privateMenuItems.map(({ text, icon }) => (
-          <ListItem disabled key={text} button>
+        {privateMenuItems.map(({ text, icon, href }) => (
+          <ListItem disabled={!isAuth} key={text} button onClick={() => onItemClick(href)}>
             <ListItemIcon>{icon}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
