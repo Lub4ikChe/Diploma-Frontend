@@ -8,5 +8,5 @@ export interface Album {
   listensCount: number;
   image: Attachment;
   author: Partial<User>;
-  tracks: Track[];
+  tracks: Partial<Track>[];
 }
