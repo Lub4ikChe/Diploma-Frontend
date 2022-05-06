@@ -1,4 +1,3 @@
-import React from 'react';
 import { routerLinks } from './router-links.enum';
 
 import SignIn from '../pages/SignIn';

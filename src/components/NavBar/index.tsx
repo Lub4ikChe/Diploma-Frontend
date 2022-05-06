@@ -6,6 +6,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 
 import DrawerNav from './DrawerNav';
+import AccountMenu from '../AccountMenu';
 
 import {
   StyledAppBar,
@@ -24,6 +25,8 @@ import { routerLinks } from '../../router/router-links.enum';
 import { NavBarProps } from './types';
 
 const NavBar: React.FC<NavBarProps> = ({ children }) => {
+  const isAuth = true;
+
   const [mobileOpen, setMobileOpen] = React.useState<boolean>(false);
   const navigate = useNavigate();
 
@@ -50,14 +53,18 @@ const NavBar: React.FC<NavBarProps> = ({ children }) => {
               <MenuIcon />
             </StyledIconButton>
           </Box>
-          <Box m={0} p={0}>
-            <StyledRegisterButton onClick={goToRegistration} variant="text" color="inherit">
-              Register
-            </StyledRegisterButton>
-            <StyledLogInButton onClick={goToSignIn} variant="contained" color="primary">
-              Log in
-            </StyledLogInButton>
-          </Box>
+          {isAuth ? (
+            <AccountMenu />
+          ) : (
+            <Box m={0} p={0}>
+              <StyledRegisterButton onClick={goToRegistration} variant="text" color="inherit">
+                Register
+              </StyledRegisterButton>
+              <StyledLogInButton onClick={goToSignIn} variant="contained" color="primary">
+                Log in
+              </StyledLogInButton>
+            </Box>
+          )}
         </StyledToolbar>
       </StyledAppBar>
       <StyledNavBox component="nav">
