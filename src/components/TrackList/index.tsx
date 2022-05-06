@@ -10,6 +10,10 @@ import TrackListItems from './TrackListItem';
 import { TrackListProps } from './types';
 
 const TrackList: React.FC<TrackListProps> = ({ tracks }) => {
+  if (!tracks.length) {
+    return null;
+  }
+
   return (
     <StyledGridWrapper container direction="column" p={1} pl={2} pr={2}>
       <StyledGrid container p={1} pl={3}>
