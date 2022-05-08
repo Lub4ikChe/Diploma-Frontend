@@ -1,24 +1,25 @@
 import styled from '@emotion/styled';
 
-import { Grid, IconButton } from '@mui/material';
 import { NavLink } from 'react-router-dom';
-
-export const StyledGrid = styled(Grid)`
-  :hover {
-    background: #262d3b;
-  }
-`;
+import { Grid, IconButton } from '@mui/material';
 
 export const StyledLink = styled(NavLink)`
   color: white;
-  font-size: 16px;
+  font-size: 14px;
   text-decoration: none;
   :hover {
     text-decoration: underline;
   }
 `;
 
+export const StyledGridItem = styled(Grid)`
+  :hover {
+    background: #262d3b;
+  }
+`;
+
 export const StyledIconButton = styled(IconButton)`
-  right: 12px;
+  right: 4px;
   position: relative;
+  padding: 0;
 `;
