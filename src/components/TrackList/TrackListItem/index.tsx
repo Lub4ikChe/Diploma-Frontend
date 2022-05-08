@@ -3,7 +3,7 @@ import React from 'react';
 import { Grid, Box } from '@mui/material';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
 
-import { StyledGrid, StyledLink, StyleIconButton } from './styles';
+import { StyledGrid, StyledLink, StyledIconButton } from './styles';
 
 import { TrackListItemProps } from './types';
 import { routerLinks } from '../../../router/router-links.enum';
@@ -26,9 +26,9 @@ const TrackListItems: React.FC<TrackListItemProps> = ({ track, hashNumber }) => 
     >
       <Grid item xs={0.6}>
         {isHovered ? (
-          <StyleIconButton color="inherit">
+          <StyledIconButton color="inherit">
             <PlayArrowRoundedIcon />
-          </StyleIconButton>
+          </StyledIconButton>
         ) : (
           hashNumber
         )}
