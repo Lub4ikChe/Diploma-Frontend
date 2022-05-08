@@ -7,7 +7,7 @@ export const StyledMenu = styled(Menu)`
     background: #161d2a;
     color: white;
     padding: 10px;
-    border: 1px solid#212A3B;
+    border: 1px solid #212a3b;
     width: 200px;
   }
 `;
@@ -33,5 +33,5 @@ export const StyledGrid = styled(Grid)`
 `;
 
 export const StyledSubTitle = styled(Typography)`
-  color: '#B2BACA';
+  color: #b2baca;
 `;

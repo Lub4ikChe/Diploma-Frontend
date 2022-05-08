@@ -7,7 +7,8 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 
 import LogoTitle from '../../LogoTitle';
-import { StyledToolBar, StyledDivider } from './styles';
+import { StyledDivider } from '../../Divider';
+import { StyledToolBar } from './styles';
 
 import { privateMenuItems, publicMenuItems } from '../data';
 import { routerLinks } from '../../../router/router-links.enum';
