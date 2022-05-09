@@ -24,6 +24,7 @@ const Author: React.FC = () => {
             height={200}
             width={200}
             border="1px solid #1a76d2"
+            borderRadius={50}
             src={author.information.photo?.url}
             alt={author.information.name}
           />
