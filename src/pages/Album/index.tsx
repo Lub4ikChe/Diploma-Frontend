@@ -45,7 +45,7 @@ const AlbumPage: React.FC = () => {
               </Typography>
               <Typography mt="auto" fontWeight={600} variant="body1">
                 <StyledLink to={`${routerLinks.AUTHORS}/${album.author.id}`}>
-                  {album.author.information?.name || 'N/A'}{' '}
+                  {album.author.information?.name || 'N/A'}
                 </StyledLink>
                 <Tooltip placement="top" arrow title="Listens Count">
                   <StyledHeadsetRoundedIcon />
