@@ -1,11 +1,17 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, Tooltip } from '@mui/material';
 
-import { StyledIcon } from './styles';
+import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
+import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
+
+import { StyledIcon, StyledIconButton, StyledLikedIconProps } from './styles';
 
 import { TrackHeaderProps } from './types';
 
 const TrackHeader: React.FC<TrackHeaderProps> = ({ track }) => {
+  const [toggleLiked, setToggleLiked] = React.useState<boolean>(false);
+  const onToggleLikeHandle = (): void => setToggleLiked(prev => !prev);
+
   return (
     <Box display="flex">
       <Box
@@ -25,6 +31,17 @@ const TrackHeader: React.FC<TrackHeaderProps> = ({ track }) => {
         <Typography variant="h6">{track.listensCount}</Typography>
         <Typography variant="h6">Uploaded at:</Typography>
         <Typography variant="h6">{track.uploadedAt.toLocaleDateString()}</Typography>
+      </Box>
+      <Box ml="auto">
+        <Tooltip placement="top" arrow title="Like track">
+          <StyledIconButton onClick={onToggleLikeHandle}>
+            {toggleLiked ? (
+              <FavoriteRoundedIcon style={StyledLikedIconProps} />
+            ) : (
+              <FavoriteBorderRoundedIcon style={StyledLikedIconProps} />
+            )}
+          </StyledIconButton>
+        </Tooltip>
       </Box>
     </Box>
   );
