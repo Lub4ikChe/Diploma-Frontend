@@ -42,14 +42,14 @@ const Albums: React.FC = () => {
   const nextBtnDisable = page + 1 === Math.ceil(total / limit);
   const prevBtnDisable = page === 0;
 
-  const showTracks = !loading && !error;
+  const showAlbums = !loading && !error;
 
   return (
     <Grid container direction="column">
       <ContentPageHeader label="albums" search={search} onSearchChange={onSearchChange} />
       <SkeletonLoader isLoading={loading} />
       {error && <ErrorAlert message={error} />}
-      {showTracks &&
+      {showAlbums &&
         (albums.length ? (
           <>
             <AlbumList albums={albums} />
