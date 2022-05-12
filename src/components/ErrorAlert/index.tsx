@@ -5,8 +5,13 @@ import { StyledErrorAlert, StyledSpan } from './styles';
 import { ErrorAlertProps } from './types';
 
 const ErrorAlert: React.FC<ErrorAlertProps> = ({ message }) => {
-  const renderMessageArray = (messages: string[]): JSX.Element[] => {
-    return messages.map(msg => <StyledSpan key={msg}>{msg}</StyledSpan>);
+  const renderMessageArray = (messages: string[]): JSX.Element[] | JSX.Element => {
+    if (messages.some(msg => typeof msg !== 'string')) {
+      return <StyledSpan>Something went wrong</StyledSpan>;
+    }
+    return messages.map(msg => {
+      return <StyledSpan key={msg}>{msg}</StyledSpan>;
+    });
   };
 
   return (

@@ -6,7 +6,7 @@ import { Box, Button, Grid, Typography } from '@mui/material';
 import NoPageContent from '../../components/NoPageContent';
 import TrackList from '../../components/TrackList';
 
-import { Track } from '../../entities/track';
+import { Track } from '../../models/track';
 import { routerLinks } from '../../router/router-links.enum';
 
 const tracks: Track[] = [];

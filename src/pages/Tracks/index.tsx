@@ -6,7 +6,7 @@ import ContentPageHeader from '../../components/ContentPageHeader';
 import NoPageContent from '../../components/NoPageContent';
 import TrackList from '../../components/TrackList';
 
-import { Track } from '../../entities/track';
+import { Track } from '../../models/track';
 
 const tracks: Track[] = [];
 

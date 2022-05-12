@@ -5,7 +5,7 @@ import { Box, Button, Grid, Typography } from '@mui/material';
 import NoPageContent from '../../components/NoPageContent';
 import AlbumList from '../../components/AlbumList';
 
-import { Album } from '../../entities/album';
+import { Album } from '../../models/album';
 
 const albums: Album[] = [];
 

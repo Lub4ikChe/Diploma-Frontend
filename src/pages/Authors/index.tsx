@@ -6,7 +6,7 @@ import ContentPageHeader from '../../components/ContentPageHeader';
 import NoPageContent from '../../components/NoPageContent';
 import AuthorList from '../../components/AuthorList';
 
-import { User } from '../../entities/user';
+import { User } from '../../models/user';
 
 const authors: User[] = [];
 

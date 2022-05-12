@@ -6,7 +6,7 @@ import { StyledGridAuthorPageWrapper, StyledGridHeaderWrapper } from './styles';
 import TrackList from '../../components/TrackList';
 import AlbumList from '../../components/AlbumList';
 
-import { UserWithMedia } from '../../entities/user/user-with-media';
+import { UserWithMedia } from '../../models/user/user-with-media';
 
 const author: UserWithMedia | any = null;
 

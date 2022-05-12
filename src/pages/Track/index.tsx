@@ -9,7 +9,7 @@ import TrackAuthor from './TrackAuthor';
 import TrackComments from './TrackComments';
 import TrackAddComment from './TrackAddComment';
 
-import { Track } from '../../entities/track';
+import { Track } from '../../models/track';
 
 const track: Track | any = null;
 

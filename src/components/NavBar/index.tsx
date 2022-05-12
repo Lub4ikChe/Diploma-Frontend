@@ -24,8 +24,10 @@ import { routerLinks } from '../../router/router-links.enum';
 
 import { NavBarProps } from './types';
 
+import { useTypedSelector } from '../../hooks/use-typed-selector';
+
 const NavBar: React.FC<NavBarProps> = ({ children }) => {
-  const isAuth = true;
+  const { isAuth } = useTypedSelector(state => state.userAuth);
 
   const [mobileOpen, setMobileOpen] = React.useState<boolean>(false);
   const navigate = useNavigate();

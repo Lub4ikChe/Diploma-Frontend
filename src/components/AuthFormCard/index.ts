@@ -38,6 +38,15 @@ export const FormTextField = styled(TextField)`
   .MuiFilledInput-root {
     color: white;
   }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #1e2636 inset !important;
+    -webkit-text-fill-color: white !important;
+    border-radius: 0;
+  }
 `;
 
 export const FormLink = styled(NavLink)`

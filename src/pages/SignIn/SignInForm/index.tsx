@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Box, Button, CardActions, CardContent, Divider, Typography } from '@mui/material';
 
@@ -10,15 +11,23 @@ import {
 } from '../../../components/AuthFormCard';
 
 import LogoTitle from '../../../components/LogoTitle';
+import ErrorAlert from '../../../components/ErrorAlert';
 
 import { StyledFlexDid } from './styles';
 
 import { routerLinks } from '../../../router/router-links.enum';
 
+import { useTypedSelector } from '../../../hooks/use-typed-selector';
+import { useActions } from '../../../hooks/use-actions';
+
 const SignInForm: React.FC = () => {
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+
+  const navigate = useNavigate();
+  const { error, loading, isAuth } = useTypedSelector(state => state.userAuth);
+  const { signIn } = useActions();
 
   const focusHandler = (): void => {
     setIsFocused(prev => !prev);
@@ -32,6 +41,25 @@ const SignInForm: React.FC = () => {
     setPassword(event.target.value);
   };
 
+  const onSubmitHandle = (): void => {
+    if (!email.length || !password.length) {
+      return;
+    }
+    signIn(email, password);
+  };
+
+  const onEnterSubmit = (event: React.KeyboardEvent<HTMLInputElement>): void => {
+    if (event.code === 'Enter' && !loading) {
+      onSubmitHandle();
+    }
+  };
+
+  React.useEffect(() => {
+    if (isAuth) {
+      navigate(routerLinks.ROOT);
+    }
+  }, [isAuth]);
+
   return (
     <FormCardWrapper maxWidth="sm">
       <LogoTitle />
@@ -42,20 +70,19 @@ const SignInForm: React.FC = () => {
               Log in to your account
             </Typography>
           </Box>
-          {/* {errorMessage &&  <ErrorAlert message={errorMessage} />} */}
+          {error && <ErrorAlert message={error} />}
           <FormTextField
             fullWidth
             label="Email address"
             value={email}
             error={isFocused && !email.length}
-            // helperText={isFocused && !email.length && 'Incorrect entry.'}
             variant="filled"
             margin="normal"
             InputProps={{
               disableUnderline: true,
             }}
             onChange={onEmailChange}
-            // onKeyDown={onEnterSubmit}
+            onKeyDown={onEnterSubmit}
           />
           <FormTextField
             fullWidth
@@ -70,7 +97,7 @@ const SignInForm: React.FC = () => {
             }}
             type="password"
             onChange={onPasswordChange}
-            // onKeyDown={onEnterSubmit}
+            onKeyDown={onEnterSubmit}
           />
         </CardContent>
         <Divider className="divider" />
@@ -81,7 +108,8 @@ const SignInForm: React.FC = () => {
             size="large"
             color="primary"
             className="submit-button"
-            // onClick={() => submit()}
+            disabled={loading}
+            onClick={onSubmitHandle}
           >
             Log in
           </Button>
