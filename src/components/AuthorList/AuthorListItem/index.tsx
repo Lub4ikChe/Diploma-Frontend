@@ -26,6 +26,7 @@ const AuthorListItem: React.FC<AuthorListItemProps> = ({ author }) => {
             src={author.information?.photo?.url}
             alt={author.information?.name}
             mb={1}
+            crossOrigin="anonymous"
           />
           <StyledCardContent>
             <Typography fontWeight={600} variant="h5">
