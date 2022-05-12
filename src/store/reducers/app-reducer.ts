@@ -1,7 +1,7 @@
 import { AppState, AppAction, AppActionTypes } from '../types/app';
 
 const initialState: AppState = {
-  appLoading: false,
+  appLoading: !!localStorage.getItem('token'),
 };
 
 export const appReducer = (state = initialState, action: AppAction): AppState => {

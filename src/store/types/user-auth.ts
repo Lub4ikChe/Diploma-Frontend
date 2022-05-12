@@ -1,3 +1,4 @@
+import { Error } from '../../models/response/error';
 import { User } from '../../models/user';
 
 export enum UserAuthActionTypes {
@@ -24,7 +25,7 @@ interface SetLoadingAction {
 
 interface SetErrorAction {
   type: UserAuthActionTypes.SET_ERROR;
-  payload: null | string | string[];
+  payload: Error;
 }
 
 export type UserAuthAction = SetIsAuthAction | SetUserAction | SetLoadingAction | SetErrorAction;
@@ -33,5 +34,5 @@ export interface UserAuthState {
   isAuth: boolean;
   user: User | null;
   loading: boolean;
-  error: null | string | string[];
+  error: Error;
 }
