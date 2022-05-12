@@ -1,4 +1,4 @@
-import { Track } from '../../../entities/track';
+import { Track } from '../../../models/track';
 
 export interface TrackListItemProps {
   track: Track;

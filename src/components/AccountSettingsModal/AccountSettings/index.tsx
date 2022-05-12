@@ -10,11 +10,15 @@ import CloseHeaderModal from '../../Modal/CloseHeaderModal';
 import { AccountSettingsProps } from './types';
 import { routerLinks } from '../../../router/router-links.enum';
 
+import { useTypedSelector } from '../../../hooks/use-typed-selector';
+
 const AccountSettings: React.FC<AccountSettingsProps> = ({ closeModal }) => {
   const [currentPassword, setCurrentPassword] = React.useState<string>('');
   const [newPassword, setNewPassword] = React.useState<string>('');
   const [confirmNewPassword, setConfirmNewPassword] = React.useState<string>('');
   const navigate = useNavigate();
+
+  const { user } = useTypedSelector(state => state.userAuth);
 
   const onCurrentPasswordChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setCurrentPassword(event.target.value);
@@ -55,7 +59,7 @@ const AccountSettings: React.FC<AccountSettingsProps> = ({ closeModal }) => {
         <StyledTextField
           fullWidth
           label="Email address"
-          value="jocker.rap.jocker@gmail.com"
+          value={user?.email}
           disabled
           variant="filled"
           margin="normal"

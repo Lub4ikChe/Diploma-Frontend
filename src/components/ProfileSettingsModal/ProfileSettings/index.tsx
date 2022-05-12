@@ -8,9 +8,12 @@ import CloseHeaderModal from '../../Modal/CloseHeaderModal';
 
 import { ProfileSettingsProps } from './types';
 
+import { useTypedSelector } from '../../../hooks/use-typed-selector';
+
 const ProfileSettings: React.FC<ProfileSettingsProps> = ({ closeModal }) => {
-  const [firstName, setFirstName] = React.useState<string>('');
-  const [lastName, setLastName] = React.useState<string>('');
+  const { user } = useTypedSelector(state => state.userAuth);
+  const [firstName, setFirstName] = React.useState<string>(user?.information.firstName || '');
+  const [lastName, setLastName] = React.useState<string>(user?.information.lastName || '');
 
   const onFirstNameChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setFirstName(event.target.value);
@@ -27,7 +30,12 @@ const ProfileSettings: React.FC<ProfileSettingsProps> = ({ closeModal }) => {
       <CloseHeaderModal label="Profile settings" closeModal={closeModal} />
       <StyledDivider />
       <Box mt={2} display="flex" pb={2}>
-        <StyledAvatar src="" />
+        <StyledAvatar
+          imgProps={{
+            crossOrigin: 'anonymous',
+          }}
+          src={user?.information.photo?.url}
+        />
         <Box ml={2} display="flex" justifyContent="space-between" flexDirection="column">
           <Typography variant="h6" component="h2">
             Upload your profile image

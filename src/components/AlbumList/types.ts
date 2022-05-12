@@ -1,4 +1,4 @@
-import { Album } from '../../entities/album';
+import { Album } from '../../models/album';
 
 export interface AlbumListProps {
   albums: Album[];

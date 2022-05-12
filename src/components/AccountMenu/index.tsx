@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Grid, Box, ListItemIcon, ListItemText, Typography, Hidden } from '@mui/material';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
@@ -8,12 +9,20 @@ import ProfileSettingsModal from '../ProfileSettingsModal';
 import AccountSettingsModal from '../AccountSettingsModal';
 
 import { menuItems, MenuItemsType } from './data';
+import { routerLinks } from '../../router/router-links.enum';
+
+import { useTypedSelector } from '../../hooks/use-typed-selector';
+import { useActions } from '../../hooks/use-actions';
 
 const AccountMenu: React.FC = () => {
   const [menuAnchorEl, setMenuAnchorEl] = React.useState<null | HTMLElement>(null);
   const [profileSettingsModalOpen, setProfileSettingsModalOpen] = React.useState(false);
   const [accountSettingsModalOpen, setAccountSettingsModalOpen] = React.useState(false);
   const menuOpen = Boolean(menuAnchorEl);
+
+  const navigate = useNavigate();
+  const { user } = useTypedSelector(state => state.userAuth);
+  const { signOut } = useActions();
 
   const handleMenuClick = (event: React.MouseEvent<HTMLDivElement>): void => {
     setMenuAnchorEl(event.currentTarget);
@@ -29,8 +38,6 @@ const AccountMenu: React.FC = () => {
   const handleCloseAccountSettingsModal = (): void => setAccountSettingsModalOpen(false);
   const handleOpenAccountSettingsModal = (): void => setAccountSettingsModalOpen(true);
 
-  const logOut = (): any => null;
-
   const onMenuItemClick = (itemType: MenuItemsType): void => {
     handleMenuClose();
     switch (itemType) {
@@ -41,7 +48,8 @@ const AccountMenu: React.FC = () => {
         handleOpenAccountSettingsModal();
         break;
       case MenuItemsType.logOut:
-        logOut();
+        signOut();
+        navigate(routerLinks.ROOT);
         break;
       default:
         break;
@@ -52,14 +60,19 @@ const AccountMenu: React.FC = () => {
     <Box>
       <StyledGrid container alignItems="center" onClick={handleMenuClick}>
         <Grid item>
-          <StyledAvatar src="" />
+          <StyledAvatar
+            imgProps={{
+              crossOrigin: 'anonymous',
+            }}
+            src={user?.information.photo?.url}
+          />
         </Grid>
         <Hidden smDown>
           <Grid item ml={2}>
             <Typography fontWeight={600} variant="body2">
-              Name name
+              {user?.information.name || 'N/A'}
             </Typography>
-            <StyledSubTitle variant="caption">jocker.rap.jocekr@gmail.com</StyledSubTitle>
+            <StyledSubTitle variant="caption">{user?.email}</StyledSubTitle>
           </Grid>
           <Grid item alignSelf="center">
             <KeyboardArrowDownRoundedIcon />

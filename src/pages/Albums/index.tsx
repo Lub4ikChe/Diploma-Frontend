@@ -6,7 +6,7 @@ import ContentPageHeader from '../../components/ContentPageHeader';
 import NoPageContent from '../../components/NoPageContent';
 import AlbumList from '../../components/AlbumList';
 
-import { Album } from '../../entities/album';
+import { Album } from '../../models/album';
 
 const albums: Album[] = [];
 

@@ -4,8 +4,10 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 import { routerLinks } from '../../router/router-links.enum';
 import { privateRoutes, publicRoutes } from '../../router/routes';
 
+import { useTypedSelector } from '../../hooks/use-typed-selector';
+
 const AppRouter: React.FC = () => {
-  const isAuth = false;
+  const { isAuth } = useTypedSelector(state => state.userAuth);
   return (
     <Routes>
       {isAuth &&

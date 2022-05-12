@@ -13,9 +13,12 @@ import { StyledToolBar } from './styles';
 import { privateMenuItems, publicMenuItems } from '../data';
 import { routerLinks } from '../../../router/router-links.enum';
 
+import { useTypedSelector } from '../../../hooks/use-typed-selector';
+
 const DrawerNav: React.FC = () => {
   const navigate = useNavigate();
-  const isAuth = false;
+  const { isAuth } = useTypedSelector(state => state.userAuth);
+
   const onItemClick = (href: routerLinks): void => {
     navigate(href);
   };
