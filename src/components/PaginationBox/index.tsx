@@ -10,6 +10,7 @@ const PaginationBox: React.FC<PaginationBoxProps> = ({
   prevPage,
   nextBtnDisable,
   prevBtnDisable,
+  label,
 }) => {
   const scrollToTop = (): void => {
     window.scrollTo({
@@ -31,10 +32,10 @@ const PaginationBox: React.FC<PaginationBoxProps> = ({
   return (
     <Box mt={2}>
       <NextPageButton variant="contained" onClick={onNextPageClick} disabled={nextBtnDisable}>
-        Next tracks
+        Next {label}
       </NextPageButton>
       <PrevPageButton variant="contained" onClick={onPrevPageClick} disabled={prevBtnDisable}>
-        Prev tracks
+        Prev {label}
       </PrevPageButton>
     </Box>
   );
