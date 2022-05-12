@@ -42,6 +42,7 @@ const TrackListItems: React.FC<TrackListItemProps> = ({ track, hashNumber }) => 
             width={40}
             src={track.image.url}
             alt={track.name}
+            crossOrigin="anonymous"
           />
           <Box ml={2}>
             {track.name}
@@ -67,7 +68,7 @@ const TrackListItems: React.FC<TrackListItemProps> = ({ track, hashNumber }) => 
         )}
       </Grid>
       <Grid item xs={3}>
-        {track.uploadedAt.toLocaleDateString()}
+        {new Date(track.uploadedAt).toLocaleDateString()}
       </Grid>
       <Grid textAlign="center" item xs={1}>
         {track.listensCount}

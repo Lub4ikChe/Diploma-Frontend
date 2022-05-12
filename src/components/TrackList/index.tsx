@@ -9,10 +9,12 @@ import TrackListItems from './TrackListItem';
 
 import { TrackListProps } from './types';
 
-const TrackList: React.FC<TrackListProps> = ({ tracks }) => {
+const TrackList: React.FC<TrackListProps> = ({ tracks, hash = 0 }) => {
   if (!tracks.length) {
     return null;
   }
+
+  const getHashNumber = (index: number): number => index + 1 + hash;
 
   return (
     <StyledGridWrapper container direction="column" p={1} pl={2} pr={2}>
@@ -36,7 +38,7 @@ const TrackList: React.FC<TrackListProps> = ({ tracks }) => {
         </Grid>
       </StyledGrid>
       {tracks.map((track, index) => {
-        return <TrackListItems key={track.id} track={track} hashNumber={index + 1} />;
+        return <TrackListItems key={track.id} track={track} hashNumber={getHashNumber(index)} />;
       })}
     </StyledGridWrapper>
   );
