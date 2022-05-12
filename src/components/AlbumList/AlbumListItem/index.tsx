@@ -25,6 +25,7 @@ const AlbumListItem: React.FC<AlbumListItemProps> = ({ album }) => {
             src={album.image.url}
             alt={album.name}
             mb={1}
+            crossOrigin="anonymous"
           />
           <StyledCardContent>
             <Typography fontWeight={600} variant="h5">

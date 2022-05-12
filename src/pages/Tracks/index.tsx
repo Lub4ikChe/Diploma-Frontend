@@ -6,7 +6,7 @@ import ContentPageHeader from '../../components/ContentPageHeader';
 import NoPageContent from '../../components/NoPageContent';
 import TrackList from '../../components/TrackList';
 import ErrorAlert from '../../components/ErrorAlert';
-import PaginationBox from './PaginationBox';
+import PaginationBox from '../../components/PaginationBox';
 import SkeletonLoader from '../../components/SkeletonLoader';
 
 import { useActions } from '../../hooks/use-actions';
@@ -59,6 +59,7 @@ const Tracks: React.FC = () => {
                 prevPage={prevPage}
                 nextBtnDisable={nextBtnDisable}
                 prevBtnDisable={prevBtnDisable}
+                label="tracks"
               />
             )}
           </>

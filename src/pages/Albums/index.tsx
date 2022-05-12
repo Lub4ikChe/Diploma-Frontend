@@ -5,22 +5,67 @@ import { Grid } from '@mui/material';
 import ContentPageHeader from '../../components/ContentPageHeader';
 import NoPageContent from '../../components/NoPageContent';
 import AlbumList from '../../components/AlbumList';
+import ErrorAlert from '../../components/ErrorAlert';
+import PaginationBox from '../../components/PaginationBox';
+import SkeletonLoader from '../../components/SkeletonLoader';
 
-import { Album } from '../../models/album';
-
-const albums: Album[] = [];
+import { useTypedSelector } from '../../hooks/use-typed-selector';
+import { useActions } from '../../hooks/use-actions';
+import { useDebounce } from '../../hooks/use-debounce';
 
 const Albums: React.FC = () => {
   const [search, setSearch] = React.useState<string>('');
+  const [page, setPage] = React.useState<number>(0);
+  const limit = 25;
+
+  const { albums, total, loading, error } = useTypedSelector(state => state.albums);
+  const { getAlbums, setAlbumsLoading } = useActions();
+  const debouncedGetAlbums = useDebounce(getAlbums, 400);
 
   const onSearchChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setSearch(event.target.value);
   };
 
+  const nextPage = (): void => setPage(prev => prev + 1);
+  const prevPage = (): void => setPage(prev => prev - 1);
+
+  React.useEffect(() => {
+    debouncedGetAlbums(page, limit, search);
+  }, [page, search]);
+
+  // because of debounce need set to load
+  // before debounced callback finished
+  React.useEffect(() => {
+    setAlbumsLoading(true);
+  }, []);
+
+  const nextBtnDisable = page + 1 === Math.ceil(total / limit);
+  const prevBtnDisable = page === 0;
+
+  const showTracks = !loading && !error;
+
   return (
     <Grid container direction="column">
       <ContentPageHeader label="albums" search={search} onSearchChange={onSearchChange} />
-      {albums.length ? <AlbumList albums={albums} /> : <NoPageContent label="albums" />}
+      <SkeletonLoader isLoading={loading} />
+      {error && <ErrorAlert message={error} />}
+      {showTracks &&
+        (albums.length ? (
+          <>
+            <AlbumList albums={albums} />
+            {albums.length < total && (
+              <PaginationBox
+                nextPage={nextPage}
+                prevPage={prevPage}
+                nextBtnDisable={nextBtnDisable}
+                prevBtnDisable={prevBtnDisable}
+                label="albums"
+              />
+            )}
+          </>
+        ) : (
+          <NoPageContent label="albums" />
+        ))}
     </Grid>
   );
 };

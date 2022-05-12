@@ -3,4 +3,5 @@ export interface PaginationBoxProps {
   prevPage: () => void;
   nextBtnDisable: boolean;
   prevBtnDisable: boolean;
+  label: 'tracks' | 'albums' | 'authors';
 }
