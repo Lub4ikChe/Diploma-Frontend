@@ -5,6 +5,7 @@ const initialState: AuthorsState = {
   total: 0,
   error: null,
   loading: false,
+  specificAuthor: null,
 };
 
 export const authorsReducer = (state = initialState, action: AuthorsAction): AuthorsState => {
@@ -17,6 +18,8 @@ export const authorsReducer = (state = initialState, action: AuthorsAction): Aut
       return { ...state, loading: action.payload };
     case AuthorsActionTypes.SET_ERROR:
       return { ...state, error: action.payload };
+    case AuthorsActionTypes.SET_SPECIFIC_AUTHOR:
+      return { ...state, specificAuthor: action.payload };
     default:
       return state;
   }

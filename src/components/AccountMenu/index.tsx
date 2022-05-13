@@ -64,13 +64,13 @@ const AccountMenu: React.FC = () => {
             imgProps={{
               crossOrigin: 'anonymous',
             }}
-            src={user?.information.photo?.url}
+            src={user?.information?.photo?.url}
           />
         </Grid>
         <Hidden smDown>
           <Grid item ml={2}>
             <Typography fontWeight={600} variant="body2">
-              {user?.information.name || 'N/A'}
+              {user?.information?.name || 'N/A'}
             </Typography>
             <StyledSubTitle variant="caption">{user?.email}</StyledSubTitle>
           </Grid>

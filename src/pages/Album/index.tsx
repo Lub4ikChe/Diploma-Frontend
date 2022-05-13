@@ -56,69 +56,74 @@ const AlbumPage: React.FC = () => {
 
   return (
     <StyledGridContainer container direction="column">
-      <SkeletonLoader isLoading={loading} />
-      <Grid item xs={12}>
-        <Box overflow="hidden" position="relative">
-          <StyledBlurBox position="absolute" ml={2} mr={2}>
-            <Box
-              crossOrigin="anonymous"
-              component="img"
-              height="-webkit-fill-available"
-              width="-webkit-fill-available"
-              position="absolute"
-              src={album?.image?.url}
-              alt={album?.name}
-            />
-          </StyledBlurBox>
-          <Box m={2} mt={0} pt={2} mb={0} pb={2} display="flex">
-            <Box
-              component="img"
-              crossOrigin="anonymous"
-              height={230}
-              width={230}
-              src={album?.image?.url}
-              alt={album?.name}
-            />
-            <Box ml={2} display="flex" flexDirection="column">
-              <Typography mt={6} variant="body1">
-                Album
-              </Typography>
-              <Typography fontWeight={600} variant="h2">
-                {album?.name}
-                {userIsOwner && (
-                  <IconButton onClick={onEditClick} color="inherit">
-                    <EditRoundedIcon />
-                  </IconButton>
-                )}
-              </Typography>
-              <Typography mt="auto" fontWeight={600} variant="body1">
-                <StyledLink to={`${routerLinks.AUTHORS}/${album?.author.id}`}>
-                  {album?.author.information?.name || 'N/A'}
-                </StyledLink>
-                <Tooltip placement="top" arrow title="Listens Count">
-                  <StyledHeadsetRoundedIcon />
-                </Tooltip>
-                {album?.listensCount}
-              </Typography>
+      {loading ? (
+        <SkeletonLoader isLoading={loading} />
+      ) : (
+        <>
+          <Grid item xs={12}>
+            <Box overflow="hidden" position="relative">
+              <StyledBlurBox position="absolute" ml={2} mr={2}>
+                <Box
+                  crossOrigin="anonymous"
+                  component="img"
+                  height="-webkit-fill-available"
+                  width="-webkit-fill-available"
+                  position="absolute"
+                  src={album?.image?.url}
+                  alt={album?.name}
+                />
+              </StyledBlurBox>
+              <Box m={2} mt={0} pt={2} mb={0} pb={2} display="flex">
+                <Box
+                  component="img"
+                  crossOrigin="anonymous"
+                  height={230}
+                  width={230}
+                  src={album?.image?.url}
+                  alt={album?.name}
+                />
+                <Box ml={2} display="flex" flexDirection="column">
+                  <Typography mt={6} variant="body1">
+                    Album
+                  </Typography>
+                  <Typography fontWeight={600} variant="h2">
+                    {album?.name}
+                    {userIsOwner && (
+                      <IconButton onClick={onEditClick} color="inherit">
+                        <EditRoundedIcon />
+                      </IconButton>
+                    )}
+                  </Typography>
+                  <Typography mt="auto" fontWeight={600} variant="body1">
+                    <StyledLink to={`${routerLinks.AUTHORS}/${album?.author.id}`}>
+                      {album?.author.information?.name || 'N/A'}
+                    </StyledLink>
+                    <Tooltip placement="top" arrow title="Listens Count">
+                      <StyledHeadsetRoundedIcon />
+                    </Tooltip>
+                    {album?.listensCount}
+                  </Typography>
+                </Box>
+              </Box>
             </Box>
-          </Box>
-        </Box>
-      </Grid>
-      <StyledGriContentWrapper item container p={2}>
-        <Grid item xs={12} mb={3}>
-          <Box display="flex" alignItems="center">
-            <StyledIconButton disabled={!album?.tracks.length}>
-              <PlayCircleRoundedIcon color="primary" />
-            </StyledIconButton>
-            <Typography fontWeight={600} variant="h4">
-              Play
-            </Typography>
-          </Box>
-        </Grid>
-        {album && <AlbumTrackList album={album} />}
-      </StyledGriContentWrapper>
-      {album && showEditModal && (
-        <AlbumEditModal onClose={onEditModalClose} open={showEditModal} album={album} />
+          </Grid>
+          <StyledGriContentWrapper item container p={2}>
+            <Grid item xs={12} mb={3}>
+              <Box display="flex" alignItems="center">
+                <StyledIconButton disabled={!album?.tracks.length}>
+                  <PlayCircleRoundedIcon color="primary" />
+                </StyledIconButton>
+                <Typography fontWeight={600} variant="h4">
+                  Play
+                </Typography>
+              </Box>
+            </Grid>
+            {album && <AlbumTrackList album={album} />}
+          </StyledGriContentWrapper>
+          {album && showEditModal && (
+            <AlbumEditModal onClose={onEditModalClose} open={showEditModal} album={album} />
+          )}
+        </>
       )}
     </StyledGridContainer>
   );

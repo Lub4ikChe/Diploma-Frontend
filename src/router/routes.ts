@@ -12,7 +12,9 @@ import Authors from '../pages/Authors';
 import LikedTracks from '../pages/LikedTracks';
 import MyTracks from '../pages/MyTracks';
 import MyAlbums from '../pages/MyAlbums';
+
 import AlbumPage from '../pages/Album';
+import Author from '../pages/Author';
 
 interface Route {
   path: routerLinks;
@@ -23,7 +25,9 @@ export const privateRoutes: Route[] = [
   { path: routerLinks.LIKED_TRACKS, component: LikedTracks },
   { path: routerLinks.MY_TRACKS, component: MyTracks },
   { path: routerLinks.MY_ALBUMS, component: MyAlbums },
+
   { path: routerLinks.SPECIFIC_ALBUM, component: AlbumPage },
+  { path: routerLinks.SPECIFIC_AUTHOR, component: Author },
 ];
 
 export const publicRoutes: Route[] = [
