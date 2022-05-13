@@ -5,14 +5,15 @@ import { Box, Button, Grid, Typography } from '@mui/material';
 import NoPageContent from '../../components/NoPageContent';
 import TrackList from '../../components/TrackList';
 
-import { Track } from '../../models/track';
-
-const tracks: Track[] = [];
+import { useTypedSelector } from '../../hooks/use-typed-selector';
 
 const MyTracks: React.FC = () => {
+  const { user } = useTypedSelector(state => state.userAuth);
+  const tracks = user?.uploadedTracks || [];
+
   return (
     <Grid container direction="column">
-      <Box display="flex" justifyContent="space-between">
+      <Box mb={1} display="flex" justifyContent="space-between" alignItems="center">
         <Typography fontWeight={600} component="h2">
           My tracks
         </Typography>

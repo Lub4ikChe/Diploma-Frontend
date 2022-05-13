@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 
 import UserService from '../../services/user-service';
 
-import { User } from '../../models/user';
+import { UserWithMedia } from '../../models/user/user-with-media';
 import { AppAction } from '../types/app';
 import { UserAuthAction, UserAuthActionTypes } from '../types/user-auth';
 import { Error } from '../../models/response/error';
@@ -30,7 +30,7 @@ const setAuthError = (error: Error): UserAuthAction => {
   };
 };
 
-const setUser = (user: User | null): UserAuthAction => {
+const setUser = (user: UserWithMedia | null): UserAuthAction => {
   return {
     type: UserAuthActionTypes.SET_USER,
     payload: user,
