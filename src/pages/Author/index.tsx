@@ -25,7 +25,7 @@ const Author: React.FC = () => {
   }, []);
 
   if (error) {
-    return <ErrorAlert message={error || 'Something went wrong'} />;
+    return <ErrorAlert message={error} />;
   }
 
   return (

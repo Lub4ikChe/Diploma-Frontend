@@ -51,7 +51,7 @@ const AlbumPage: React.FC = () => {
   }, []);
 
   if (error && !showEditModal) {
-    return <ErrorAlert message={error || 'Something went wrong'} />;
+    return <ErrorAlert message={error} />;
   }
 
   return (
