@@ -6,6 +6,7 @@ export enum AlbumsActionTypes {
   SET_TOTAL = 'SET_TOTAL',
   SET_LOADING = 'SET_LOADING',
   SET_ERROR = 'SET_ERROR',
+  SET_SPECIFIC_ALBUM = 'SET_SPECIFIC_ALBUM',
 }
 
 interface SetAlbumsAction {
@@ -28,11 +29,22 @@ interface SetErrorAction {
   payload: Error;
 }
 
-export type AlbumsAction = SetAlbumsAction | SetTotalAction | SetLoadingAction | SetErrorAction;
+interface SetSpecificAlbumAction {
+  type: AlbumsActionTypes.SET_SPECIFIC_ALBUM;
+  payload: Album;
+}
+
+export type AlbumsAction =
+  | SetAlbumsAction
+  | SetTotalAction
+  | SetLoadingAction
+  | SetErrorAction
+  | SetSpecificAlbumAction;
 
 export interface AlbumsState {
   albums: Album[];
   total: number;
   loading: boolean;
   error: Error;
+  specificAlbum: Album | null;
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Grid, Tooltip } from '@mui/material';
+import { Grid, Tooltip, Typography } from '@mui/material';
 import HeadsetRoundedIcon from '@mui/icons-material/HeadsetRounded';
 
 import { StyledGridInfo } from './styles';
@@ -9,6 +9,9 @@ import { AlbumTrackListProps } from './types';
 import AlbumTrack from './AlbumTrack';
 
 const AlbumTrackList: React.FC<AlbumTrackListProps> = ({ album }) => {
+  if (!album.tracks.length) {
+    return <Typography>Album doesn't have any tracks</Typography>;
+  }
   return (
     <>
       <StyledGridInfo item container p={1}>
