@@ -82,3 +82,72 @@ export const checkIsAuth = () => async (dispatch: Dispatch<UserAuthAction | AppA
     dispatch(setAppLoading(false));
   }
 };
+
+export const changePassword =
+  (currentPassword: string, newPassword: string) => async (dispatch: Dispatch<UserAuthAction>) => {
+    try {
+      dispatch(setAuthLoading(true));
+
+      await UserService.changePassword(currentPassword, newPassword);
+
+      dispatch(setAuthError(null));
+    } catch (error: any) {
+      let { message } = error.response.data;
+      if (message[0]?.property === 'password') {
+        message = message[0]?.constraints?.matches;
+      }
+
+      dispatch(setAuthError(message));
+    } finally {
+      dispatch(setAuthLoading(false));
+    }
+  };
+
+export const updateUserInfo =
+  (firstName: string, lastName: string) => async (dispatch: Dispatch<UserAuthAction>) => {
+    try {
+      dispatch(setAuthLoading(true));
+
+      await UserService.updateUserInfo(firstName, lastName);
+      const getMeResponse = await UserService.getMe();
+
+      dispatch(setUser(getMeResponse.data));
+      dispatch(setAuthError(null));
+    } catch (error: any) {
+      dispatch(setAuthError(error.response.data.message));
+    } finally {
+      dispatch(setAuthLoading(false));
+    }
+  };
+
+export const updateUserPhoto = (photoFile: File) => async (dispatch: Dispatch<UserAuthAction>) => {
+  try {
+    dispatch(setAuthLoading(true));
+
+    await UserService.updateUserPhoto(photoFile);
+    const getMeResponse = await UserService.getMe();
+
+    dispatch(setUser(getMeResponse.data));
+    dispatch(setAuthError(null));
+  } catch (error: any) {
+    dispatch(setAuthError(error.response.data.message));
+  } finally {
+    dispatch(setAuthLoading(false));
+  }
+};
+
+export const deleteUserPhoto = () => async (dispatch: Dispatch<UserAuthAction>) => {
+  try {
+    dispatch(setAuthLoading(true));
+
+    await UserService.deleteUserPhoto();
+    const getMeResponse = await UserService.getMe();
+
+    dispatch(setUser(getMeResponse.data));
+    dispatch(setAuthError(null));
+  } catch (error: any) {
+    dispatch(setAuthError(error.response.data.message));
+  } finally {
+    dispatch(setAuthLoading(false));
+  }
+};

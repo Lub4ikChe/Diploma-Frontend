@@ -7,7 +7,7 @@ export const StyledBox = styled(Box)`
   left: 50%;
   transform: translate(-50%, -50%);
 
-  maxwidth: 600px;
+  max-width: 700px;
   width: 70%;
 
   background-color: #161d2a;
