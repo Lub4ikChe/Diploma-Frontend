@@ -6,9 +6,9 @@ import { StyledGridAuthorPageWrapper, StyledGridHeaderWrapper } from './styles';
 import TrackList from '../../components/TrackList';
 import AlbumList from '../../components/AlbumList';
 
-import { UserWithMedia } from '../../models/user/user-with-media';
+import { UserWithLatestMedia } from '../../models/user/user-with-latest-media';
 
-const author: UserWithMedia | any = null;
+const author: UserWithLatestMedia | any = null;
 
 const Author: React.FC = () => {
   if (!author) {

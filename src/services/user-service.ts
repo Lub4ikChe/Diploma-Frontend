@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import { $api, http } from '../http';
 
 import { UserAuthResponse } from '../models/response/user-auth-response';
-import { User } from '../models/user';
+import { UserWithMedia } from '../models/user/user-with-media';
 
 export default class UserService {
   static async signIn(email: string, password: string): Promise<AxiosResponse<UserAuthResponse>> {
@@ -13,8 +13,8 @@ export default class UserService {
     return $api.post('/auth/signout');
   }
 
-  static async getMe(): Promise<AxiosResponse<User>> {
-    return $api.get<User>('/user/me');
+  static async getMe(): Promise<AxiosResponse<UserWithMedia>> {
+    return $api.get<UserWithMedia>('/user/me');
   }
 
   static async checkAuth(): Promise<AxiosResponse<UserAuthResponse>> {

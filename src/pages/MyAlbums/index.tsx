@@ -5,14 +5,15 @@ import { Box, Button, Grid, Typography } from '@mui/material';
 import NoPageContent from '../../components/NoPageContent';
 import AlbumList from '../../components/AlbumList';
 
-import { Album } from '../../models/album';
-
-const albums: Album[] = [];
+import { useTypedSelector } from '../../hooks/use-typed-selector';
 
 const MyAlbums: React.FC = () => {
+  const { user } = useTypedSelector(state => state.userAuth);
+  const albums = user?.uploadedAlbums || [];
+
   return (
     <Grid container direction="column">
-      <Box display="flex" justifyContent="space-between">
+      <Box mb={1} display="flex" justifyContent="space-between" alignItems="center">
         <Typography fontWeight={600} component="h2">
           My albums
         </Typography>

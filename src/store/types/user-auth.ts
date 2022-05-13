@@ -1,5 +1,5 @@
 import { Error } from '../../models/response/error';
-import { User } from '../../models/user';
+import { UserWithMedia } from '../../models/user/user-with-media';
 
 export enum UserAuthActionTypes {
   SET_IS_AUTH = 'SET_IS_AUTH',
@@ -15,7 +15,7 @@ interface SetIsAuthAction {
 
 interface SetUserAction {
   type: UserAuthActionTypes.SET_USER;
-  payload: User | null;
+  payload: UserWithMedia | null;
 }
 
 interface SetLoadingAction {
@@ -32,7 +32,7 @@ export type UserAuthAction = SetIsAuthAction | SetUserAction | SetLoadingAction 
 
 export interface UserAuthState {
   isAuth: boolean;
-  user: User | null;
+  user: UserWithMedia | null;
   loading: boolean;
   error: Error;
 }
