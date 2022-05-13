@@ -1,11 +1,13 @@
 import { User } from '../../models/user';
 import { Error } from '../../models/response/error';
+import { UserWithLatestMedia } from '../../models/user/user-with-latest-media';
 
 export enum AuthorsActionTypes {
   SET_AUTHORS = 'SET_AUTHORS',
   SET_TOTAL = 'SET_TOTAL',
   SET_LOADING = 'SET_LOADING',
   SET_ERROR = 'SET_ERROR',
+  SET_SPECIFIC_AUTHOR = 'SET_SPECIFIC_AUTHOR',
 }
 
 interface SetAuthorsAction {
@@ -28,11 +30,22 @@ interface SetErrorAction {
   payload: Error;
 }
 
-export type AuthorsAction = SetAuthorsAction | SetTotalAction | SetLoadingAction | SetErrorAction;
+interface SetSpecificAuthorAction {
+  type: AuthorsActionTypes.SET_SPECIFIC_AUTHOR;
+  payload: UserWithLatestMedia;
+}
+
+export type AuthorsAction =
+  | SetAuthorsAction
+  | SetTotalAction
+  | SetLoadingAction
+  | SetErrorAction
+  | SetSpecificAuthorAction;
 
 export interface AuthorsState {
   authors: User[];
   total: number;
   loading: boolean;
   error: Error;
+  specificAuthor: UserWithLatestMedia | null;
 }

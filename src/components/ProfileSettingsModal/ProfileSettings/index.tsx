@@ -22,10 +22,10 @@ const ProfileSettings: React.FC<ProfileSettingsProps> = ({ closeModal }) => {
   const { user, loading, error } = useTypedSelector(state => state.userAuth);
   const { updateUserInfo, updateUserPhoto, deleteUserPhoto } = useActions();
 
-  const [firstName, setFirstName] = React.useState<string>(user?.information.firstName || '');
-  const [lastName, setLastName] = React.useState<string>(user?.information.lastName || '');
+  const [firstName, setFirstName] = React.useState<string>(user?.information?.firstName || '');
+  const [lastName, setLastName] = React.useState<string>(user?.information?.lastName || '');
 
-  const [imageSrc, setImageSrc] = React.useState<string>(user?.information.photo?.url || '');
+  const [imageSrc, setImageSrc] = React.useState<string>(user?.information?.photo?.url || '');
   const [imageFile, setImageFile] = React.useState<File | null>(null);
   const [isiDeleteImage, setIsiDeleteImage] = React.useState<boolean>(false);
 

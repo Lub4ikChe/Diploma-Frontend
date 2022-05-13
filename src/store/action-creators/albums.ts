@@ -2,9 +2,9 @@ import { Dispatch } from 'redux';
 
 import { AlbumsActionTypes, AlbumsAction } from '../types/albums';
 import { Album } from '../../models/album';
+import { Error } from '../../models/response/error';
 
 import AlbumsService from '../../services/albums-service';
-import { Error } from '../../models/response/error';
 
 export const setAlbums = (albums: Album[]): AlbumsAction => {
   return {
