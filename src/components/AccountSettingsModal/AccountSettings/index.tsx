@@ -3,23 +3,26 @@ import { useNavigate } from 'react-router-dom';
 
 import { Box, Typography, Grid } from '@mui/material';
 
-import { StyledDivider } from '../../Divider';
 import { StyledTextField, StyledForgotPasswordButton, StyledSaveButton } from './styles';
+import { StyledDivider } from '../../Divider';
 import CloseHeaderModal from '../../Modal/CloseHeaderModal';
+import ErrorAlert from '../../ErrorAlert';
 
 import { AccountSettingsProps } from './types';
 import { routerLinks } from '../../../router/router-links.enum';
 
 import { useTypedSelector } from '../../../hooks/use-typed-selector';
+import { useActions } from '../../../hooks/use-actions';
 
 const AccountSettings: React.FC<AccountSettingsProps> = ({ closeModal }) => {
   const [currentPassword, setCurrentPassword] = React.useState<string>('');
   const [newPassword, setNewPassword] = React.useState<string>('');
   const [confirmNewPassword, setConfirmNewPassword] = React.useState<string>('');
+  const [notMatchError, setNotMatchError] = React.useState<string>('');
   const navigate = useNavigate();
 
-  const { user } = useTypedSelector(state => state.userAuth);
-
+  const { user, loading, error } = useTypedSelector(state => state.userAuth);
+  const { changePassword } = useActions();
   const onCurrentPasswordChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setCurrentPassword(event.target.value);
   };
@@ -37,8 +40,26 @@ const AccountSettings: React.FC<AccountSettingsProps> = ({ closeModal }) => {
     closeModal();
   };
 
+  const onSaveHandler = (): void => {
+    if (newPassword !== confirmNewPassword) {
+      setNotMatchError("Passwords don't match");
+      return;
+    }
+    changePassword(currentPassword, newPassword);
+  };
+
+  React.useEffect(() => {
+    if (!error) {
+      setCurrentPassword('');
+      setNewPassword('');
+      setConfirmNewPassword('');
+    }
+  }, [error]);
+
   const isSaveChangesButtonDisabled =
-    !currentPassword.length || !newPassword.length || !confirmNewPassword.length;
+    !currentPassword.length || !newPassword.length || !confirmNewPassword.length || loading;
+
+  const isForgotPasswordButtonDisabled = loading;
 
   return (
     <>
@@ -55,6 +76,7 @@ const AccountSettings: React.FC<AccountSettingsProps> = ({ closeModal }) => {
         </Typography>
       </Box>
       <StyledDivider />
+      {(error || notMatchError) && <ErrorAlert message={error || notMatchError} />}
       <Box mt={2} display="flex" flexDirection="column" pb={2}>
         <StyledTextField
           fullWidth
@@ -107,12 +129,22 @@ const AccountSettings: React.FC<AccountSettingsProps> = ({ closeModal }) => {
       <StyledDivider />
       <Grid container spacing={1} mt={2}>
         <Grid item xs={12} sm={6} md={6}>
-          <StyledForgotPasswordButton onClick={onForgotPasswordClick} fullWidth variant="contained">
+          <StyledForgotPasswordButton
+            onClick={onForgotPasswordClick}
+            disabled={isForgotPasswordButtonDisabled}
+            fullWidth
+            variant="contained"
+          >
             I forgot my password
           </StyledForgotPasswordButton>
         </Grid>
         <Grid item xs={12} sm={6} md={6}>
-          <StyledSaveButton disabled={isSaveChangesButtonDisabled} fullWidth variant="contained">
+          <StyledSaveButton
+            onClick={onSaveHandler}
+            disabled={isSaveChangesButtonDisabled}
+            fullWidth
+            variant="contained"
+          >
             Save Changes
           </StyledSaveButton>
         </Grid>

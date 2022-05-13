@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { TextField, Avatar, Button } from '@mui/material';
+import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 
 export const StyledTextField = styled(TextField)`
   background: #212a3b;
@@ -42,5 +43,15 @@ export const StyledSaveButton = styled(Button)`
 
   :disabled {
     background: #283543 !important;
+  }
+`;
+
+export const StyledDeleteIcon = styled(DeleteForeverRoundedIcon)`
+  position: relative;
+  left: 54px;
+  bottom: 20px;
+
+  :hover {
+    cursor: pointer;
   }
 `;
