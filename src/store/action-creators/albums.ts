@@ -34,6 +34,13 @@ export const setAlbumsError = (error: Error): AlbumsAction => {
   };
 };
 
+export const setSpecificAlbum = (album: Album): AlbumsAction => {
+  return {
+    type: AlbumsActionTypes.SET_SPECIFIC_ALBUM,
+    payload: album,
+  };
+};
+
 export const getAlbums =
   (page = 0, limit = 10, search = '') =>
   async (dispatch: Dispatch<AlbumsAction>) => {
@@ -44,6 +51,37 @@ export const getAlbums =
 
       dispatch(setAlbums(response.data[0]));
       dispatch(setAlbumsTotal(response.data[1]));
+      dispatch(setAlbumsError(null));
+    } catch (error: any) {
+      dispatch(setAlbumsError(error.response.data.message));
+    } finally {
+      dispatch(setAlbumsLoading(false));
+    }
+  };
+
+export const getAlbum = (albumId: string) => async (dispatch: Dispatch<AlbumsAction>) => {
+  try {
+    dispatch(setAlbumsLoading(true));
+
+    const response = await AlbumsService.getAlbum(albumId);
+
+    dispatch(setSpecificAlbum(response.data));
+    dispatch(setAlbumsError(null));
+  } catch (error: any) {
+    dispatch(setAlbumsError(error.response.data.message));
+  } finally {
+    dispatch(setAlbumsLoading(false));
+  }
+};
+
+export const updateAlbum =
+  (albumId: string, albumName: string) => async (dispatch: Dispatch<AlbumsAction>) => {
+    try {
+      dispatch(setAlbumsLoading(true));
+
+      const response = await AlbumsService.updateAlbum(albumId, albumName);
+
+      dispatch(setSpecificAlbum(response.data));
       dispatch(setAlbumsError(null));
     } catch (error: any) {
       dispatch(setAlbumsError(error.response.data.message));

@@ -5,6 +5,7 @@ const initialState: AlbumsState = {
   total: 0,
   error: null,
   loading: false,
+  specificAlbum: null,
 };
 
 export const albumsReducer = (state = initialState, action: AlbumsAction): AlbumsState => {
@@ -17,6 +18,8 @@ export const albumsReducer = (state = initialState, action: AlbumsAction): Album
       return { ...state, loading: action.payload };
     case AlbumsActionTypes.SET_ERROR:
       return { ...state, error: action.payload };
+    case AlbumsActionTypes.SET_SPECIFIC_ALBUM:
+      return { ...state, specificAlbum: action.payload };
     default:
       return state;
   }

@@ -10,7 +10,7 @@ export enum routerLinks {
   SPECIFIC_TRACK = '/track/:id',
 
   ALBUMS = '/album',
-  SPECIFIC_ALBUM = '/album/:id',
+  SPECIFIC_ALBUM = '/album/:albumId',
 
   AUTHORS = '/author',
   SPECIFIC_AUTHOR = '/author/:id',

@@ -39,6 +39,12 @@ export const StyledIconButton = styled(IconButton)`
     height: 60px;
     width: 60px;
   }
+
+  :disabled {
+    svg {
+      color: #10151f !important;
+    }
+  }
 `;
 
 export const StyledLink = styled(NavLink)`

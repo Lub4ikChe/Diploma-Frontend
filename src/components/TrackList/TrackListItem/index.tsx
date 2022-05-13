@@ -48,7 +48,7 @@ const TrackListItems: React.FC<TrackListItemProps> = ({ track, hashNumber }) => 
             {track.name}
             <Box>
               {track.uploadedBy.information ? (
-                <StyledLink to={`${routerLinks.AUTHORS}/${track.uploadedBy.id}}`}>
+                <StyledLink to={`${routerLinks.AUTHORS}/${track.uploadedBy.id}`}>
                   {track.uploadedBy.information.name}
                 </StyledLink>
               ) : (
@@ -60,9 +60,7 @@ const TrackListItems: React.FC<TrackListItemProps> = ({ track, hashNumber }) => 
       </Grid>
       <Grid item xs={3}>
         {track.album ? (
-          <StyledLink to={`${routerLinks.TRACKS}/${track.album.id}}`}>
-            {track.album.name}
-          </StyledLink>
+          <StyledLink to={`${routerLinks.ALBUMS}/${track.album.id}`}>{track.album.name}</StyledLink>
         ) : (
           '-'
         )}
