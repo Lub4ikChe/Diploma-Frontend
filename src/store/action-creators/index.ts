@@ -3,6 +3,7 @@ import * as AppActionCreators from './app';
 import * as TracksActionCreators from './tracks';
 import * as AlbumsActionCreators from './albums';
 import * as AuthorsActionCreators from './authors';
+import * as HomeActionCreators from './home';
 
 export default {
   ...UserActionCreators,
@@ -10,4 +11,5 @@ export default {
   ...TracksActionCreators,
   ...AlbumsActionCreators,
   ...AuthorsActionCreators,
+  ...HomeActionCreators,
 };

@@ -33,7 +33,7 @@ const AlbumListItem: React.FC<AlbumListItemProps> = ({ album }) => {
             </Typography>
             <StyledLink
               onClick={e => e.stopPropagation()}
-              to={`${routerLinks.AUTHORS}/${album.author.id}}`}
+              to={`${routerLinks.AUTHORS}/${album.author.id}`}
             >
               {album.author.information?.name || 'N/A'}
             </StyledLink>
