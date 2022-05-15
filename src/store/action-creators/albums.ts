@@ -1,4 +1,5 @@
 import { Dispatch } from 'redux';
+import { AxiosResponse } from 'axios';
 
 import { AlbumsActionTypes, AlbumsAction } from '../types/albums';
 import { Album } from '../../models/album';
@@ -75,11 +76,13 @@ export const getAlbum = (albumId: string) => async (dispatch: Dispatch<AlbumsAct
 };
 
 export const updateAlbum =
-  (albumId: string, albumName: string) => async (dispatch: Dispatch<AlbumsAction>) => {
+  (albumId: string, albumName: string) =>
+  async (dispatch: Dispatch<AlbumsAction>): Promise<AxiosResponse<Album> | undefined> => {
+    let response;
     try {
       dispatch(setAlbumsLoading(true));
 
-      const response = await AlbumsService.updateAlbum(albumId, albumName);
+      response = await AlbumsService.updateAlbum(albumId, albumName);
 
       dispatch(setSpecificAlbum(response.data));
       dispatch(setAlbumsError(null));
@@ -88,4 +91,5 @@ export const updateAlbum =
     } finally {
       dispatch(setAlbumsLoading(false));
     }
+    return response;
   };

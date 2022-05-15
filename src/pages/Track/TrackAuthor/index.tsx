@@ -17,6 +17,7 @@ const TrackAuthor: React.FC<TrackAuthorProps> = ({ author }) => {
         borderRadius={50}
         src={author.information?.photo?.url}
         alt={author.information?.name}
+        crossOrigin="anonymous"
       />
       <Box ml={2} display="flex" flexDirection="column">
         <Typography mt={5} variant="h5">

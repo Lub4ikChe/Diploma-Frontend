@@ -18,7 +18,6 @@ const AppRouter: React.FC = () => {
       {publicRoutes.map(({ path, component: Component }) => (
         <Route key={path} path={path} element={<Component />} />
       ))}
-      <Route path={routerLinks.ROOT} element={<div />} />
       <Route path={routerLinks.ALL} element={<Navigate to={routerLinks.ROOT} />} />
     </Routes>
   );
