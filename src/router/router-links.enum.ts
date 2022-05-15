@@ -7,7 +7,7 @@ export enum routerLinks {
   FORGOT_PASSWORD = '/forgot-password',
 
   TRACKS = '/track',
-  SPECIFIC_TRACK = '/track/:id',
+  SPECIFIC_TRACK = '/track/:trackId',
 
   ALBUMS = '/album',
   SPECIFIC_ALBUM = '/album/:albumId',

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Grid, Box } from '@mui/material';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
@@ -10,9 +11,19 @@ import { routerLinks } from '../../../router/router-links.enum';
 
 const TrackListItems: React.FC<TrackListItemProps> = ({ track, hashNumber }) => {
   const [isHovered, setIsHovered] = React.useState<boolean>(false);
+  const navigate = useNavigate();
 
   const mouseMoveHandler = (): void => {
     setIsHovered(prev => !prev);
+  };
+
+  const onTrackImageCLick = (): void => {
+    navigate(`${routerLinks.TRACKS}/${track.id}`);
+  };
+
+  const onPlayButtonClick = (): void => {
+    // eslint-disable-next-line no-console
+    console.log('play button click');
   };
 
   return (
@@ -26,7 +37,7 @@ const TrackListItems: React.FC<TrackListItemProps> = ({ track, hashNumber }) => 
     >
       <Grid item xs={0.6}>
         {isHovered ? (
-          <StyledIconButton color="inherit">
+          <StyledIconButton onClick={onPlayButtonClick} color="inherit">
             <PlayArrowRoundedIcon />
           </StyledIconButton>
         ) : (
@@ -43,9 +54,11 @@ const TrackListItems: React.FC<TrackListItemProps> = ({ track, hashNumber }) => 
             src={track.image.url}
             alt={track.name}
             crossOrigin="anonymous"
+            onClick={onTrackImageCLick}
+            style={{ cursor: 'pointer' }}
           />
           <Box ml={2}>
-            {track.name}
+            <StyledLink to={`${routerLinks.TRACKS}/${track.id}`}>{track.name}</StyledLink>
             <Box>
               {track.uploadedBy.information ? (
                 <StyledLink to={`${routerLinks.AUTHORS}/${track.uploadedBy.id}`}>

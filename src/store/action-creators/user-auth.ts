@@ -30,7 +30,7 @@ const setAuthError = (error: Error): UserAuthAction => {
   };
 };
 
-const setUser = (user: UserWithMedia | null): UserAuthAction => {
+export const setUser = (user: UserWithMedia | null): UserAuthAction => {
   return {
     type: UserAuthActionTypes.SET_USER,
     payload: user,

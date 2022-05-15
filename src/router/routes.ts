@@ -15,6 +15,7 @@ import MyAlbums from '../pages/MyAlbums';
 
 import AlbumPage from '../pages/Album';
 import Author from '../pages/Author';
+import TrackPage from '../pages/Track';
 
 interface Route {
   path: routerLinks;
@@ -26,6 +27,7 @@ export const privateRoutes: Route[] = [
   { path: routerLinks.MY_TRACKS, component: MyTracks },
   { path: routerLinks.MY_ALBUMS, component: MyAlbums },
 
+  { path: routerLinks.SPECIFIC_TRACK, component: TrackPage },
   { path: routerLinks.SPECIFIC_ALBUM, component: AlbumPage },
   { path: routerLinks.SPECIFIC_AUTHOR, component: Author },
 ];
