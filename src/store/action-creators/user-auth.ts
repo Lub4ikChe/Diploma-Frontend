@@ -91,6 +91,32 @@ export const signOut = () => async (dispatch: Dispatch<UserAuthAction>) => {
   dispatch(setUser(null));
 };
 
+export const forgotPasswordRequest =
+  (email: string) => async (dispatch: Dispatch<UserAuthAction>) => {
+    try {
+      dispatch(setAuthLoading(true));
+      await UserService.forgotPasswordRequest(email);
+      dispatch(setAuthError(null));
+    } catch (error: any) {
+      dispatch(setAuthError(error.response.data.message));
+    } finally {
+      dispatch(setAuthLoading(false));
+    }
+  };
+
+export const forgotPasswordReset =
+  (resetToken: string, password: string) => async (dispatch: Dispatch<UserAuthAction>) => {
+    try {
+      dispatch(setAuthLoading(true));
+      await UserService.forgotPasswordReset(resetToken, password);
+      dispatch(setAuthError(null));
+    } catch (error: any) {
+      dispatch(setAuthError(error.response.data.message));
+    } finally {
+      dispatch(setAuthLoading(false));
+    }
+  };
+
 export const checkIsAuth = () => async (dispatch: Dispatch<UserAuthAction | AppAction>) => {
   try {
     dispatch(setAppLoading(true));

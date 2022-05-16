@@ -18,6 +18,7 @@ import MyAlbums from '../pages/MyAlbums';
 import AlbumPage from '../pages/Album';
 import Author from '../pages/Author';
 import TrackPage from '../pages/Track';
+import ResetPassword from '../pages/ResetPassword';
 
 interface Route {
   path: routerLinks;
@@ -40,6 +41,7 @@ export const publicRoutes: Route[] = [
   { path: routerLinks.FORGOT_PASSWORD, component: ForgotPassword },
 
   { path: routerLinks.COMPLETE_REGISTRATION, component: CompleteRegistration },
+  { path: routerLinks.RESET_PASSWORD, component: ResetPassword },
 
   { path: routerLinks.ROOT, component: Home },
   { path: routerLinks.TRACKS, component: Tracks },

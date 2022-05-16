@@ -1,10 +1,6 @@
 import styled from '@emotion/styled';
-import { Box } from '@mui/material';
 
-export const StyledDiv = styled.div`
-  margin-top: 5px;
-  color: white;
-`;
+import { Box, Button } from '@mui/material';
 
 export const StyledBox = styled(Box)`
   align-items: center;
@@ -18,4 +14,10 @@ export const StyledBox = styled(Box)`
   top: 0;
   left: 0;
   justify-content: center;
+`;
+
+export const StyledResetButton = styled(Button)`
+  :disabled {
+    color: white;
+  }
 `;
