@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Box, Button, CardActions, CardContent, Divider, Typography } from '@mui/material';
 
@@ -11,13 +12,23 @@ import {
 
 import LogoTitle from '../../../components/LogoTitle';
 
-import { StyledDiv } from './styles';
+import { StyledDiv, StyledBox } from './styles';
+import ErrorAlert from '../../../components/ErrorAlert';
 
 import { routerLinks } from '../../../router/router-links.enum';
+
+import { useTypedSelector } from '../../../hooks/use-typed-selector';
+import { useActions } from '../../../hooks/use-actions';
 
 const ForgotPasswordForm: React.FC = () => {
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('');
+  const [showResetLinkSent, setShowResetLinkSent] = useState<boolean>(false);
+
+  const navigate = useNavigate();
+
+  const { loading, error } = useTypedSelector(state => state.userAuth);
+  const { forgotPasswordRequest } = useActions();
 
   const focusHandler = (): void => {
     setIsFocused(prev => !prev);
@@ -26,6 +37,34 @@ const ForgotPasswordForm: React.FC = () => {
   const onEmailChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setEmail(event.target.value);
   };
+
+  const onSubmitHandle = (): void => {
+    forgotPasswordRequest(email);
+    setShowResetLinkSent(true);
+  };
+
+  const onEnterSubmit = (event: React.KeyboardEvent<HTMLInputElement>): void => {
+    if (event.code === 'Enter' && !loading) {
+      onSubmitHandle();
+    }
+  };
+
+  const onResetOkClick = (): void => {
+    navigate(routerLinks.SIGN_IN);
+  };
+
+  const isSendResetLinkButtonDisabled = loading;
+
+  if (showResetLinkSent && !error) {
+    return (
+      <StyledBox>
+        <Typography variant="h5">We send you email with link to reset password</Typography>
+        <Button variant="contained" size="large" color="primary" onClick={onResetOkClick}>
+          OK
+        </Button>
+      </StyledBox>
+    );
+  }
 
   return (
     <FormCardWrapper maxWidth="sm">
@@ -43,7 +82,7 @@ const ForgotPasswordForm: React.FC = () => {
               reset your password
             </Typography>
           </Box>
-          {/* {errorMessage &&  <ErrorAlert message={errorMessage} />} */}
+          {error && <ErrorAlert message={error} />}
           <FormTextField
             fullWidth
             label="Email address"
@@ -55,7 +94,7 @@ const ForgotPasswordForm: React.FC = () => {
               disableUnderline: true,
             }}
             onChange={onEmailChange}
-            // onKeyDown={onEnterSubmit}
+            onKeyDown={onEnterSubmit}
           />
         </CardContent>
         <Divider className="divider" />
@@ -65,7 +104,8 @@ const ForgotPasswordForm: React.FC = () => {
             variant="contained"
             size="large"
             color="primary"
-            // onClick={() => submit()}
+            onClick={onSubmitHandle}
+            disabled={isSendResetLinkButtonDisabled}
           >
             Send password reset link
           </Button>

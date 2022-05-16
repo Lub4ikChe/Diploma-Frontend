@@ -19,6 +19,14 @@ export default class UserService {
     return $api.post<UserAuthResponse>('auth/signup', { email, password });
   }
 
+  static async forgotPasswordRequest(email: string): Promise<void> {
+    return $api.post('password/request', { email });
+  }
+
+  static async forgotPasswordReset(token: string, password: string): Promise<void> {
+    return $api.post('password/reset', { token, password });
+  }
+
   static async getMe(): Promise<AxiosResponse<UserWithMedia>> {
     return $api.get<UserWithMedia>('/user/me');
   }
