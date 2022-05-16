@@ -15,6 +15,10 @@ export default class UserService {
     return $api.post('/auth/signout');
   }
 
+  static async signUp(email: string, password: string): Promise<AxiosResponse<UserAuthResponse>> {
+    return $api.post<UserAuthResponse>('auth/signup', { email, password });
+  }
+
   static async getMe(): Promise<AxiosResponse<UserWithMedia>> {
     return $api.get<UserWithMedia>('/user/me');
   }
@@ -27,6 +31,16 @@ export default class UserService {
     return $api.put('/password', {
       currentPassword,
       password: newPassword,
+    });
+  }
+
+  static async createUserInfo(
+    firstName: string,
+    lastName: string,
+  ): Promise<AxiosResponse<UserInformation>> {
+    return $api.post<UserInformation>('/user/information', {
+      firstName,
+      lastName,
     });
   }
 

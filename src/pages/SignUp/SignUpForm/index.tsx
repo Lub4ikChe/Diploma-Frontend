@@ -8,18 +8,25 @@ import {
   FormTextField,
   FormLink,
 } from '../../../components/AuthFormCard';
-
 import LogoTitle from '../../../components/LogoTitle';
+import ErrorAlert from '../../../components/ErrorAlert';
 
 import { StyledDiv } from './styles';
 
 import { routerLinks } from '../../../router/router-links.enum';
+
+import { useTypedSelector } from '../../../hooks/use-typed-selector';
+import { useActions } from '../../../hooks/use-actions';
 
 const SignUpForm: React.FC = () => {
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
+  const [notMatchError, setNotMatchError] = React.useState<string>('');
+
+  const { loading, error } = useTypedSelector(state => state.userAuth);
+  const { signUp } = useActions();
 
   const focusHandler = (): void => {
     setIsFocused(prev => !prev);
@@ -37,6 +44,22 @@ const SignUpForm: React.FC = () => {
     setConfirmPassword(event.target.value);
   };
 
+  const onSubmitHandle = (): void => {
+    if (password !== confirmPassword) {
+      setNotMatchError("Passwords don't match");
+      return;
+    }
+    signUp(email, password);
+  };
+
+  const onEnterSubmit = (event: React.KeyboardEvent<HTMLInputElement>): void => {
+    if (event.code === 'Enter' && !loading) {
+      onSubmitHandle();
+    }
+  };
+
+  const isSignUpButtonDisabled = loading;
+
   return (
     <FormCardWrapper maxWidth="sm">
       <LogoTitle />
@@ -53,7 +76,7 @@ const SignUpForm: React.FC = () => {
               characters with a capital letter, a lowercase letter, and a number
             </Typography>
           </Box>
-          {/* {errorMessage &&  <ErrorAlert message={errorMessage} />} */}
+          {(error || notMatchError) && <ErrorAlert message={error || notMatchError} />}
           <FormTextField
             fullWidth
             label="Email address"
@@ -65,11 +88,10 @@ const SignUpForm: React.FC = () => {
               disableUnderline: true,
             }}
             onChange={onEmailChange}
-            // onKeyDown={onEnterSubmit}
+            onKeyDown={onEnterSubmit}
           />
           <FormTextField
             fullWidth
-            id="filled-basic-1"
             label="Password"
             value={password}
             error={isFocused && !password.length}
@@ -80,7 +102,7 @@ const SignUpForm: React.FC = () => {
             }}
             type="password"
             onChange={onPasswordChange}
-            // onKeyDown={onEnterSubmit}
+            onKeyDown={onEnterSubmit}
           />
           <FormTextField
             fullWidth
@@ -95,7 +117,7 @@ const SignUpForm: React.FC = () => {
             }}
             type="password"
             onChange={onConfirmPasswordChange}
-            // onKeyDown={onEnterSubmit}
+            onKeyDown={onEnterSubmit}
           />
         </CardContent>
         <Divider className="divider" />
@@ -105,8 +127,8 @@ const SignUpForm: React.FC = () => {
             variant="contained"
             size="large"
             color="primary"
-            className="submit-button"
-            // onClick={() => submit()}
+            disabled={isSignUpButtonDisabled}
+            onClick={onSubmitHandle}
           >
             Register
           </Button>

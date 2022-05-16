@@ -5,6 +5,7 @@ const initialState: UserAuthState = {
   user: null,
   loading: false,
   error: null,
+  showActivateAccount: false,
 };
 
 export const userAuthReducer = (state = initialState, action: UserAuthAction): UserAuthState => {
@@ -17,6 +18,8 @@ export const userAuthReducer = (state = initialState, action: UserAuthAction): U
       return { ...state, loading: action.payload };
     case UserAuthActionTypes.SET_ERROR:
       return { ...state, error: action.payload };
+    case UserAuthActionTypes.SET_SHOW_ACTIVATE_ACCOUNT:
+      return { ...state, showActivateAccount: action.payload };
     default:
       return state;
   }

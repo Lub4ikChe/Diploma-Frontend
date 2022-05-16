@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 
 import { Grid, Box, Typography } from '@mui/material';
-import { StyledGridAuthorPageWrapper, StyledGridHeaderWrapper } from './styles';
+import { StyledGridAuthorPageWrapper, StyledGridHeaderWrapper, StyledAvatar } from './styles';
 
 import TrackList from '../../components/TrackList';
 import AlbumList from '../../components/AlbumList';
@@ -35,15 +35,12 @@ const Author: React.FC = () => {
         <>
           <StyledGridHeaderWrapper p={2} item xs={12}>
             <Box display="flex">
-              <Box
-                crossOrigin="anonymous"
-                component="img"
-                height={200}
-                width={200}
-                border="1px solid #1a76d2"
-                borderRadius={50}
+              <StyledAvatar
                 src={author?.information?.photo?.url}
                 alt={author?.information?.name}
+                imgProps={{
+                  crossOrigin: 'anonymous',
+                }}
               />
               <Box ml={2} display="flex" flexDirection="column">
                 <Typography mt={6} variant="h5">

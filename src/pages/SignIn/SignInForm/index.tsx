@@ -86,7 +86,6 @@ const SignInForm: React.FC = () => {
           />
           <FormTextField
             fullWidth
-            id="filled-basic-2"
             label="Password"
             value={password}
             error={isFocused && !password.length}
@@ -107,7 +106,6 @@ const SignInForm: React.FC = () => {
             variant="contained"
             size="large"
             color="primary"
-            className="submit-button"
             disabled={loading}
             onClick={onSubmitHandle}
           >
