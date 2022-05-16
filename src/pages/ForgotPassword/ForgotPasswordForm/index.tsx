@@ -65,7 +65,6 @@ const ForgotPasswordForm: React.FC = () => {
             variant="contained"
             size="large"
             color="primary"
-            className="submit-button"
             // onClick={() => submit()}
           >
             Send password reset link

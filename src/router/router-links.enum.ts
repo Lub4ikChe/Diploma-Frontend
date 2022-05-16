@@ -6,6 +6,8 @@ export enum routerLinks {
   SIGN_UP = '/signup',
   FORGOT_PASSWORD = '/forgot-password',
 
+  COMPLETE_REGISTRATION = '/complete-registration',
+
   TRACKS = '/track',
   SPECIFIC_TRACK = '/track/:trackId',
 

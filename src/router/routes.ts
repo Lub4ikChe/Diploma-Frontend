@@ -4,6 +4,8 @@ import SignIn from '../pages/SignIn';
 import SignUp from '../pages/SignUp';
 import ForgotPassword from '../pages/ForgotPassword';
 
+import CompleteRegistration from '../pages/CompleteRegistration';
+
 import Home from '../pages/Home';
 import Tracks from '../pages/Tracks';
 import Albums from '../pages/Albums';
@@ -36,6 +38,8 @@ export const publicRoutes: Route[] = [
   { path: routerLinks.SIGN_IN, component: SignIn },
   { path: routerLinks.SIGN_UP, component: SignUp },
   { path: routerLinks.FORGOT_PASSWORD, component: ForgotPassword },
+
+  { path: routerLinks.COMPLETE_REGISTRATION, component: CompleteRegistration },
 
   { path: routerLinks.ROOT, component: Home },
   { path: routerLinks.TRACKS, component: Tracks },

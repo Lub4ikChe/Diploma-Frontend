@@ -6,6 +6,7 @@ export enum UserAuthActionTypes {
   SET_USER = 'SET_USER',
   SET_LOADING = 'SET_LOADING',
   SET_ERROR = 'SET_ERROR',
+  SET_SHOW_ACTIVATE_ACCOUNT = 'SET_SHOW_ACTIVATE_ACCOUNT',
 }
 
 interface SetIsAuthAction {
@@ -28,11 +29,22 @@ interface SetErrorAction {
   payload: Error;
 }
 
-export type UserAuthAction = SetIsAuthAction | SetUserAction | SetLoadingAction | SetErrorAction;
+interface SetShowActivateAccountAction {
+  type: UserAuthActionTypes.SET_SHOW_ACTIVATE_ACCOUNT;
+  payload: boolean;
+}
+
+export type UserAuthAction =
+  | SetIsAuthAction
+  | SetUserAction
+  | SetLoadingAction
+  | SetErrorAction
+  | SetShowActivateAccountAction;
 
 export interface UserAuthState {
   isAuth: boolean;
   user: UserWithMedia | null;
   loading: boolean;
   error: Error;
+  showActivateAccount: boolean;
 }

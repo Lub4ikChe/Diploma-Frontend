@@ -16,7 +16,7 @@ const setAuthLoading = (loading: boolean): UserAuthAction => {
   };
 };
 
-const setIsAuth = (isAuth: boolean): UserAuthAction => {
+export const setIsAuth = (isAuth: boolean): UserAuthAction => {
   return {
     type: UserAuthActionTypes.SET_IS_AUTH,
     payload: isAuth,
@@ -37,6 +37,13 @@ export const setUser = (user: UserWithMedia | null): UserAuthAction => {
   };
 };
 
+export const setShowActivateAccount = (show: boolean): UserAuthAction => {
+  return {
+    type: UserAuthActionTypes.SET_SHOW_ACTIVATE_ACCOUNT,
+    payload: show,
+  };
+};
+
 export const signIn =
   (email: string, password: string) => async (dispatch: Dispatch<UserAuthAction>) => {
     try {
@@ -47,6 +54,26 @@ export const signIn =
       const getMeResponse = await UserService.getMe();
 
       dispatch(setIsAuth(true));
+      dispatch(setUser(getMeResponse.data));
+      dispatch(setAuthError(null));
+    } catch (error: any) {
+      dispatch(setAuthError(error.response.data.message));
+    } finally {
+      dispatch(setAuthLoading(false));
+    }
+  };
+
+export const signUp =
+  (email: string, password: string) => async (dispatch: Dispatch<UserAuthAction>) => {
+    try {
+      dispatch(setAuthLoading(true));
+
+      const signUpResponse = await UserService.signUp(email, password);
+      localStorage.setItem('token', signUpResponse.data.accessToken);
+      dispatch(setShowActivateAccount(true));
+
+      const getMeResponse = await UserService.getMe();
+
       dispatch(setUser(getMeResponse.data));
       dispatch(setAuthError(null));
     } catch (error: any) {
@@ -98,6 +125,23 @@ export const changePassword =
       }
 
       dispatch(setAuthError(message));
+    } finally {
+      dispatch(setAuthLoading(false));
+    }
+  };
+
+export const createUserInfo =
+  (firstName: string, lastName: string) => async (dispatch: Dispatch<UserAuthAction>) => {
+    try {
+      dispatch(setAuthLoading(true));
+
+      await UserService.createUserInfo(firstName, lastName);
+      const getMeResponse = await UserService.getMe();
+
+      dispatch(setUser(getMeResponse.data));
+      dispatch(setAuthError(null));
+    } catch (error: any) {
+      dispatch(setAuthError(error.response.data.message));
     } finally {
       dispatch(setAuthLoading(false));
     }
