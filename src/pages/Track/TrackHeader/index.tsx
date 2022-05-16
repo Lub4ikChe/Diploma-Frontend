@@ -1,11 +1,19 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Box, Typography, Tooltip } from '@mui/material';
 
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
+import DownloadRoundedIcon from '@mui/icons-material/DownloadRounded';
+import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 
-import { StyledIcon, StyledIconButton, StyledLikedIconProps } from './styles';
+import {
+  StyledIcon,
+  StyledEditOrLikeIconButton,
+  StyledIconProps,
+  StyledDeleteOrDownloadIconButton,
+} from './styles';
 
 import { TrackHeaderProps } from './types';
 
@@ -14,27 +22,39 @@ import { isUserLikedTrackAlready } from './utils';
 import { useTypedSelector } from '../../../hooks/use-typed-selector';
 import { useActions } from '../../../hooks/use-actions';
 
+import { routerLinks } from '../../../router/router-links.enum';
+
 const TrackHeader: React.FC<TrackHeaderProps> = ({ track, userIsOwner, onEditClick }) => {
   const { user } = useTypedSelector(state => state.userAuth);
   const isLikedAlready = isUserLikedTrackAlready(user?.likedTracks, track.id);
   const [toggleLiked, setToggleLiked] = React.useState<boolean>(isLikedAlready);
 
-  const { toggleLikeTrack } = useActions();
+  const navigate = useNavigate();
+
+  const { toggleLikeTrack, deleteTrack } = useActions();
 
   const onToggleLikeHandle = (): void => {
     setToggleLiked(prev => !prev);
     toggleLikeTrack(track.id);
   };
 
+  const onDeleteTrackClick = (): void => {
+    deleteTrack(track.id);
+    navigate(routerLinks.MY_TRACKS);
+  };
+
   const LikeIcon = toggleLiked ? (
-    <FavoriteRoundedIcon style={StyledLikedIconProps} />
+    <FavoriteRoundedIcon style={StyledIconProps} />
   ) : (
-    <FavoriteBorderRoundedIcon style={StyledLikedIconProps} />
+    <FavoriteBorderRoundedIcon style={StyledIconProps} />
   );
 
   const likeIconButtonText = toggleLiked ? 'Unlike track' : 'Like track';
-  const TooltipIconText = userIsOwner ? 'Edit track' : likeIconButtonText;
-  const onIconClick = userIsOwner ? onEditClick : onToggleLikeHandle;
+  const tooltipEditOrLikeIconText = userIsOwner ? 'Edit track' : likeIconButtonText;
+  const onEditOrLikeIconClick = userIsOwner ? onEditClick : onToggleLikeHandle;
+
+  const tooltipDeleteOrDownloadIconText = userIsOwner ? 'Delete track' : 'Download track';
+  const onEditOrDownloadIconClick = userIsOwner ? onDeleteTrackClick : () => null;
 
   return (
     <Box display="flex">
@@ -58,10 +78,19 @@ const TrackHeader: React.FC<TrackHeaderProps> = ({ track, userIsOwner, onEditCli
         <Typography variant="h6">{new Date(track.uploadedAt).toLocaleDateString()}</Typography>
       </Box>
       <Box ml="auto">
-        <Tooltip placement="top" arrow title={TooltipIconText}>
-          <StyledIconButton onClick={onIconClick}>
+        <Tooltip placement="top" arrow title={tooltipDeleteOrDownloadIconText}>
+          <StyledDeleteOrDownloadIconButton onClick={onEditOrDownloadIconClick}>
+            {userIsOwner ? (
+              <DeleteForeverRoundedIcon color="error" style={StyledIconProps} />
+            ) : (
+              <DownloadRoundedIcon style={StyledIconProps} />
+            )}
+          </StyledDeleteOrDownloadIconButton>
+        </Tooltip>
+        <Tooltip placement="top" arrow title={tooltipEditOrLikeIconText}>
+          <StyledEditOrLikeIconButton onClick={onEditOrLikeIconClick}>
             {userIsOwner ? <EditRoundedIcon /> : LikeIcon}
-          </StyledIconButton>
+          </StyledEditOrLikeIconButton>
         </Tooltip>
       </Box>
     </Box>

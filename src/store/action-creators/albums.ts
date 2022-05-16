@@ -7,6 +7,10 @@ import { Error } from '../../models/response/error';
 
 import AlbumsService from '../../services/albums-service';
 
+import UserService from '../../services/user-service';
+import { UserAuthAction } from '../types/user-auth';
+import { setUser } from './user-auth';
+
 export const setAlbums = (albums: Album[]): AlbumsAction => {
   return {
     type: AlbumsActionTypes.SET_ALBUMS,
@@ -52,6 +56,24 @@ export const getAlbums =
 
       dispatch(setAlbums(response.data[0]));
       dispatch(setAlbumsTotal(response.data[1]));
+      dispatch(setAlbumsError(null));
+    } catch (error: any) {
+      dispatch(setAlbumsError(error.response.data.message));
+    } finally {
+      dispatch(setAlbumsLoading(false));
+    }
+  };
+
+export const deleteAlbum =
+  (albumId: string, deleteWithTrack: boolean) =>
+  async (dispatch: Dispatch<AlbumsAction | UserAuthAction>) => {
+    try {
+      dispatch(setAlbumsLoading(true));
+
+      await AlbumsService.deleteAlbum(albumId, deleteWithTrack);
+      const getMeResponse = await UserService.getMe();
+
+      dispatch(setUser(getMeResponse.data));
       dispatch(setAlbumsError(null));
     } catch (error: any) {
       dispatch(setAlbumsError(error.response.data.message));

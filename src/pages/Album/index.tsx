@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Grid, Box, Typography, Tooltip, IconButton } from '@mui/material';
 import PlayCircleRoundedIcon from '@mui/icons-material/PlayCircleRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
+import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 
 import { routerLinks } from '../../router/router-links.enum';
 
@@ -20,6 +21,7 @@ import AlbumTrackList from './AlbumTrackList';
 import SkeletonLoader from '../../components/SkeletonLoader';
 import ErrorAlert from '../../components/ErrorAlert';
 import AlbumEditModal from './AlbumEditModal';
+import DeleteAlbumModal from './DeleteAlbumModal';
 
 import { useTypedSelector } from '../../hooks/use-typed-selector';
 import { useActions } from '../../hooks/use-actions';
@@ -31,6 +33,7 @@ const AlbumPage: React.FC = () => {
   const { specificAlbum: album, loading, error } = useTypedSelector(state => state.albums);
   const { user } = useTypedSelector(state => state.userAuth);
   const [showEditModal, setShowEditModal] = React.useState<boolean>(false);
+  const [showDeleteModal, setShowDeleteModal] = React.useState<boolean>(false);
 
   const userIsOwner = getIsUserOwner(user, albumId);
 
@@ -42,6 +45,14 @@ const AlbumPage: React.FC = () => {
 
   const onEditModalClose = (): void => {
     setShowEditModal(false);
+  };
+
+  const onDeleteClick = (): void => {
+    setShowDeleteModal(true);
+  };
+
+  const onDeleteModalClose = (): void => {
+    setShowDeleteModal(false);
   };
 
   React.useEffect(() => {
@@ -88,12 +99,21 @@ const AlbumPage: React.FC = () => {
                   </Typography>
                   <Typography fontWeight={600} variant="h2">
                     {album?.name}
-                    {userIsOwner && (
-                      <IconButton onClick={onEditClick} color="inherit">
-                        <EditRoundedIcon />
-                      </IconButton>
-                    )}
                   </Typography>
+                  {userIsOwner && (
+                    <Box>
+                      <Tooltip placement="top" arrow title="Delete album">
+                        <IconButton color="error" onClick={onDeleteClick}>
+                          <DeleteForeverRoundedIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip placement="top" arrow title="Edit album">
+                        <IconButton onClick={onEditClick} color="inherit">
+                          <EditRoundedIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </Box>
+                  )}
                   <Typography mt="auto" fontWeight={600} variant="body1">
                     <StyledLink to={`${routerLinks.AUTHORS}/${album?.author.id}`}>
                       {album?.author.information?.name || 'N/A'}
@@ -122,6 +142,9 @@ const AlbumPage: React.FC = () => {
           </StyledGriContentWrapper>
           {album && showEditModal && (
             <AlbumEditModal onClose={onEditModalClose} open={showEditModal} album={album} />
+          )}
+          {album && showDeleteModal && (
+            <DeleteAlbumModal onClose={onDeleteModalClose} open={showDeleteModal} album={album} />
           )}
         </>
       )}
