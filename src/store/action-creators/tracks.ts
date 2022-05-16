@@ -105,6 +105,23 @@ export const updateTrack =
     return response;
   };
 
+export const deleteTrack =
+  (trackId: string) => async (dispatch: Dispatch<TracksAction | UserAuthAction>) => {
+    try {
+      dispatch(setTracksLoading(true));
+
+      await TracksService.deleteTrack(trackId);
+      const getMeResponse = await UserService.getMe();
+
+      dispatch(setUser(getMeResponse.data));
+      dispatch(setTracksError(null));
+    } catch (error: any) {
+      dispatch(setTracksError(error.response.data.message));
+    } finally {
+      dispatch(setTracksLoading(false));
+    }
+  };
+
 export const toggleLikeTrack =
   (trackId: string) => async (dispatch: Dispatch<TracksAction | UserAuthAction>) => {
     await TracksService.toggleLikeTrack(trackId);
@@ -147,7 +164,7 @@ export const deleteCommentToTrack =
     try {
       dispatch(setTrackCommentOperationLoading(true));
 
-      await TracksService.deleteToTrack(trackId, commentId);
+      await TracksService.deleteCommentToTrack(trackId, commentId);
       const response = await TracksService.getTrack(trackId);
 
       dispatch(setSpecificTrack(response.data));

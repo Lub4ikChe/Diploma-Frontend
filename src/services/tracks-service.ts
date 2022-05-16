@@ -26,6 +26,10 @@ export default class TracksService {
     return $api.put<Track>(`track/${trackId}`, { name: trackName, text: trackText });
   }
 
+  static async deleteTrack(trackId: string): Promise<AxiosResponse<Track>> {
+    return $api.delete<Track>(`track/${trackId}`);
+  }
+
   static async toggleLikeTrack(trackId: string): Promise<AxiosResponse<Track[]>> {
     return $api.put<Track[]>('user/liked-track', { trackId });
   }
@@ -45,7 +49,10 @@ export default class TracksService {
     return $api.put<Comment>(`track/${trackId}/comment/${commentId}`, { text: commentText });
   }
 
-  static async deleteToTrack(trackId: string, commentId: string): Promise<AxiosResponse<Comment>> {
+  static async deleteCommentToTrack(
+    trackId: string,
+    commentId: string,
+  ): Promise<AxiosResponse<Comment>> {
     return $api.delete<Comment>(`track/${trackId}/comment/${commentId}`);
   }
 }

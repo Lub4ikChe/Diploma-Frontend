@@ -13,6 +13,13 @@ export default class AlbumsService {
     return $api.get<FetchAlbumsResponse>(`album?search=${search}&limit=${limit}&page=${page}`);
   }
 
+  static async deleteAlbum(
+    albumId: string,
+    deleteWithTrack: boolean,
+  ): Promise<AxiosResponse<Album>> {
+    return $api.delete<Album>(`album/${albumId}`, { data: { deleteWithTrack } });
+  }
+
   static async getAlbum(albumId: string): Promise<AxiosResponse<Album>> {
     return $api.get<Album>(`album/${albumId}`);
   }
