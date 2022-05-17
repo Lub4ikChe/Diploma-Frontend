@@ -24,6 +24,8 @@ import { useActions } from '../../../hooks/use-actions';
 
 import { routerLinks } from '../../../router/router-links.enum';
 
+import TracksService from '../../../services/tracks-service';
+
 const TrackHeader: React.FC<TrackHeaderProps> = ({ track, userIsOwner, onEditClick }) => {
   const { user } = useTypedSelector(state => state.userAuth);
   const isLikedAlready = isUserLikedTrackAlready(user?.likedTracks, track.id);
@@ -54,7 +56,9 @@ const TrackHeader: React.FC<TrackHeaderProps> = ({ track, userIsOwner, onEditCli
   const onEditOrLikeIconClick = userIsOwner ? onEditClick : onToggleLikeHandle;
 
   const tooltipDeleteOrDownloadIconText = userIsOwner ? 'Delete track' : 'Download track';
-  const onEditOrDownloadIconClick = userIsOwner ? onDeleteTrackClick : () => null;
+  const onEditOrDownloadIconClick = userIsOwner
+    ? onDeleteTrackClick
+    : () => TracksService.downloadTrack(track);
 
   return (
     <Box display="flex">

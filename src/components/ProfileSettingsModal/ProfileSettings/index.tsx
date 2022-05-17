@@ -45,7 +45,7 @@ const ProfileSettings: React.FC<ProfileSettingsProps> = ({ closeModal }) => {
 
   const onFileInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const file: File | null = event.target.files && event.target.files[0];
-    const imgSrc = (file && URL.createObjectURL(file)) || '';
+    const imgSrc = (file && window.URL.createObjectURL(file)) || '';
     setImageFile(file);
     setImageSrc(imgSrc);
     setIsiDeleteImage(false);
