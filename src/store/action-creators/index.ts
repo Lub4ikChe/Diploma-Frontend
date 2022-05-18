@@ -4,6 +4,7 @@ import * as TracksActionCreators from './tracks';
 import * as AlbumsActionCreators from './albums';
 import * as AuthorsActionCreators from './authors';
 import * as HomeActionCreators from './home';
+import * as PlayerActionCreators from './player';
 
 export default {
   ...UserActionCreators,
@@ -12,4 +13,5 @@ export default {
   ...AlbumsActionCreators,
   ...AuthorsActionCreators,
   ...HomeActionCreators,
+  ...PlayerActionCreators,
 };

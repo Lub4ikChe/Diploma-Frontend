@@ -61,7 +61,7 @@ const TrackHeader: React.FC<TrackHeaderProps> = ({ track, userIsOwner, onEditCli
     : () => TracksService.downloadTrack(track);
 
   return (
-    <Box display="flex">
+    <Box display="flex" flexWrap="wrap">
       <Box
         component="img"
         height={200}

@@ -28,6 +28,7 @@ import { useTypedSelector } from '../../hooks/use-typed-selector';
 
 const NavBar: React.FC<NavBarProps> = ({ children }) => {
   const { isAuth } = useTypedSelector(state => state.userAuth);
+  const { activeTrack } = useTypedSelector(state => state.player);
 
   const [mobileOpen, setMobileOpen] = React.useState<boolean>(false);
   const navigate = useNavigate();
@@ -85,7 +86,7 @@ const NavBar: React.FC<NavBarProps> = ({ children }) => {
           <DrawerNav />
         </StyledPermanentDrawer>
       </StyledNavBox>
-      <StyledMainBox component="main">
+      <StyledMainBox component="main" sx={{ pb: activeTrack ? '88px' : '24px' }}>
         <Toolbar />
         {children}
       </StyledMainBox>

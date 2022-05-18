@@ -34,6 +34,10 @@ export default class TracksService {
     return $api.put<Track[]>('user/liked-track', { trackId });
   }
 
+  static async listenTrack(trackId: string): Promise<AxiosResponse<Track[]>> {
+    return $api.post<Track[]>(`track/${trackId}/listen`);
+  }
+
   static async addCommentToTrack(
     trackId: string,
     commentText: string,

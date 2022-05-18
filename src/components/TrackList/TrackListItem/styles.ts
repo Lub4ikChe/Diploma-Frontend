@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom';
 export const StyledGrid = styled(Grid)`
   :hover {
     background: #262d3b;
+    cursor: pointer;
   }
 `;
 

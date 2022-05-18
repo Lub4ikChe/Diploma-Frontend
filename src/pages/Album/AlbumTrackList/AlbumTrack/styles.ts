@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import { NavLink } from 'react-router-dom';
-import { Grid, IconButton } from '@mui/material';
+import { Grid, IconButton, Typography } from '@mui/material';
 
 export const StyledLink = styled(NavLink)`
   color: white;
@@ -15,6 +15,7 @@ export const StyledLink = styled(NavLink)`
 export const StyledGridItem = styled(Grid)`
   :hover {
     background: #262d3b;
+    cursor: pointer;
   }
 `;
 
@@ -22,4 +23,8 @@ export const StyledIconButton = styled(IconButton)`
   right: 4px;
   position: relative;
   padding: 0;
+`;
+
+export const StyledTrackName = styled(Typography)`
+  cursor: text;
 `;

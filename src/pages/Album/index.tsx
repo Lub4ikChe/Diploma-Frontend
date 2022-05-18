@@ -7,6 +7,7 @@ import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 
 import { routerLinks } from '../../router/router-links.enum';
+import { Track } from '../../models/track';
 
 import {
   StyledGridContainer,
@@ -37,7 +38,7 @@ const AlbumPage: React.FC = () => {
 
   const userIsOwner = getIsUserOwner(user, albumId);
 
-  const { getAlbum } = useActions();
+  const { getAlbum, setActiveTrack } = useActions();
 
   const onEditClick = (): void => {
     setShowEditModal(true);
@@ -53,6 +54,10 @@ const AlbumPage: React.FC = () => {
 
   const onDeleteModalClose = (): void => {
     setShowDeleteModal(false);
+  };
+
+  const onPlayButtonClick = (): void => {
+    setActiveTrack(album?.tracks[0] as Track);
   };
 
   React.useEffect(() => {
@@ -84,7 +89,7 @@ const AlbumPage: React.FC = () => {
                   alt={album?.name}
                 />
               </StyledBlurBox>
-              <Box m={2} mt={0} pt={2} mb={0} pb={2} display="flex">
+              <Box m={2} mt={0} pt={2} mb={0} pb={2} display="flex" flexWrap="wrap">
                 <Box
                   component="img"
                   crossOrigin="anonymous"
@@ -130,7 +135,7 @@ const AlbumPage: React.FC = () => {
           <StyledGriContentWrapper item container p={2}>
             <Grid item xs={12} mb={3}>
               <Box display="flex" alignItems="center">
-                <StyledIconButton disabled={!album?.tracks.length}>
+                <StyledIconButton onClick={onPlayButtonClick} disabled={!album?.tracks.length}>
                   <PlayCircleRoundedIcon color="primary" />
                 </StyledIconButton>
                 <Typography fontWeight={600} variant="h4">
