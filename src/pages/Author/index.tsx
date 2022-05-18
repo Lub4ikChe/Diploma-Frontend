@@ -34,7 +34,7 @@ const Author: React.FC = () => {
       {!loading && (
         <>
           <StyledGridHeaderWrapper p={2} item xs={12}>
-            <Box display="flex">
+            <Box display="flex" flexWrap="wrap">
               <StyledAvatar
                 src={author?.information?.photo?.url}
                 alt={author?.information?.name}

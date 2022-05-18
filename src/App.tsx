@@ -6,6 +6,7 @@ import { Box, CircularProgress, Typography, Button } from '@mui/material';
 
 import AppRouter from './components/AppRouter';
 import NavBar from './components/NavBar';
+import Player from './components/Player';
 
 import { store } from './store';
 
@@ -67,6 +68,7 @@ const App: React.FC = () => {
   return (
     <NavBar>
       <AppRouter />
+      <Player />
     </NavBar>
   );
 };

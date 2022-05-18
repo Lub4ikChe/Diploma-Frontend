@@ -6,6 +6,7 @@ import { tracksReducer } from './tracks-reducer';
 import { albumsReducer } from './albums-reducer';
 import { authorsReducer } from './authors-reducer';
 import { homeReducer } from './home-reducer';
+import { playerReducer } from './player-reducer';
 
 export const rootReducer = combineReducers({
   userAuth: userAuthReducer,
@@ -14,6 +15,7 @@ export const rootReducer = combineReducers({
   albums: albumsReducer,
   authors: authorsReducer,
   home: homeReducer,
+  player: playerReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
