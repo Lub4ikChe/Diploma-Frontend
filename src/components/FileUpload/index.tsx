@@ -10,6 +10,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
   isUploadButtonDisabled,
   label,
   accept,
+  multiple = false,
 }) => {
   return (
     <label htmlFor="upload-button-file">
@@ -18,6 +19,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
         accept={accept}
         id="upload-button-file"
         type="file"
+        multiple={multiple}
         onChange={onFileInputChange}
       />
       <Button

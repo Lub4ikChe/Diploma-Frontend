@@ -3,6 +3,7 @@ export interface FileUploadProps {
   isUploadButtonDisabled: boolean;
   label: string;
   accept: AcceptUploadFiles;
+  multiple?: boolean;
 }
 
 export enum AcceptUploadFiles {

@@ -8,40 +8,35 @@ import { StyledStepButton } from './styles';
 import { StyledDivider } from '../../Divider';
 import CloseHeaderModal from '../../Modal/CloseHeaderModal';
 import StepperWrapper from '../../StepperWrapper';
-import AddTrackInfoStep from './AddTrackInfoStep';
-import UploadTrackImageStep from './UploadTrackImageStep';
-import UploadTrackAudioStep from './UploadTrackAudioStep';
+import AddAlbumInfoStep from './AddAlbumInfoStep';
+import UploadAlbumImageStep from './UploadAlbumImageStep';
+import UploadAlbumTracksStep from './UploadAlbumTracksStep';
 import ErrorAlert from '../../ErrorAlert';
 
 import { UploadTrackProps } from './types';
 import { routerLinks } from '../../../router/router-links.enum';
 
-import { uploadTrack } from '../../../store/action-creators/tracks';
+import { uploadAlbum } from '../../../store/action-creators/albums';
 import { useTypedSelector } from '../../../hooks/use-typed-selector';
 
-const UploadTrack: React.FC<UploadTrackProps> = ({ closeModal }) => {
+const UploadAlbum: React.FC<UploadTrackProps> = ({ closeModal }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { uploadTrackLoading } = useTypedSelector(state => state.tracks);
+  const { uploadAlbumLoading } = useTypedSelector(state => state.albums);
 
   const [activeStep, setActiveStep] = React.useState<number>(0);
   const [error, setError] = React.useState<string>('');
 
-  const [trackName, setTrackName] = React.useState<string>('');
-  const [trackText, setTrackText] = React.useState<string>('');
+  const [albumName, setAlbumName] = React.useState<string>('');
 
   const [imageSrc, setImageSrc] = React.useState<string>('');
   const [imageFile, setImageFile] = React.useState<File | null>(null);
 
-  const [audioName, setAudioName] = React.useState<string>('');
-  const [audioFile, setAudioFile] = React.useState<File | null>(null);
+  const [audioNames, setAudioNames] = React.useState<string[]>([]);
+  const [audioFiles, setAudioFiles] = React.useState<FileList | null>(null);
 
-  const onTrackNameChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    setTrackName(event.target.value);
-  };
-
-  const onTrackTextChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    setTrackText(event.target.value);
+  const onAlbumNameChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setAlbumName(event.target.value);
   };
 
   const onImageFileInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -52,10 +47,10 @@ const UploadTrack: React.FC<UploadTrackProps> = ({ closeModal }) => {
   };
 
   const onAudioFileInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    const file: File | null = event.target.files && event.target.files[0];
-    const audName = file?.name;
-    setAudioFile(file);
-    setAudioName(audName || '');
+    const files: FileList | null = event.target && event.target.files;
+    const audNames = Array.from(files || []).map(file => file.name);
+    setAudioFiles(files);
+    setAudioNames(audNames || []);
   };
 
   const goToBackStep = (): void => {
@@ -69,11 +64,11 @@ const UploadTrack: React.FC<UploadTrackProps> = ({ closeModal }) => {
 
   const onSaveClick = async (): Promise<void> => {
     try {
-      if (trackName && imageFile && audioFile) {
+      if (albumName && imageFile && audioFiles) {
         goToNextStep();
-        const result = await uploadTrack(trackName, trackText, imageFile, audioFile)(dispatch);
+        const result = await uploadAlbum(albumName, imageFile, audioFiles)(dispatch);
         if (result) {
-          navigate(routerLinks.MY_TRACKS);
+          navigate(routerLinks.MY_ALBUMS);
           closeModal();
         }
       }
@@ -84,41 +79,35 @@ const UploadTrack: React.FC<UploadTrackProps> = ({ closeModal }) => {
 
   const backStepButtonDisabled = activeStep === 0;
   const saveOrNextButtonDisabled =
-    (activeStep === 0 && !trackName.length) ||
+    (activeStep === 0 && !albumName.length) ||
     (activeStep === 1 && !imageFile) ||
-    (activeStep === 2 && !audioFile) ||
-    (activeStep === 3 && uploadTrackLoading);
+    (activeStep === 2 && !audioFiles) ||
+    (activeStep === 3 && uploadAlbumLoading);
 
   const onSaveOrNextButtonClick = activeStep >= 2 ? onSaveClick : goToNextStep;
   const saveOrNextButtonText = activeStep >= 2 ? 'Save' : 'Next';
 
   return (
     <Grid container minHeight="360px" direction="column">
-      <CloseHeaderModal label="Upload track" closeModal={closeModal} />
+      <CloseHeaderModal label="Upload album" closeModal={closeModal} />
       <StyledDivider />
-      <StepperWrapper variant="uploadTrack" activeStep={activeStep}>
+      <StepperWrapper variant="uploadAlbum" activeStep={activeStep}>
         {error && <ErrorAlert message={error} />}
-
-        {!uploadTrackLoading ? (
+        {!uploadAlbumLoading ? (
           <>
             {activeStep === 0 && (
-              <AddTrackInfoStep
-                name={trackName}
-                onNameChange={onTrackNameChange}
-                text={trackText}
-                onTextChange={onTrackTextChange}
-              />
+              <AddAlbumInfoStep name={albumName} onNameChange={onAlbumNameChange} />
             )}
             {activeStep === 1 && (
-              <UploadTrackImageStep
+              <UploadAlbumImageStep
                 imageSrc={imageSrc}
                 onFileInputChange={onImageFileInputChange}
                 isUploadButtonDisabled={false}
               />
             )}
             {activeStep === 2 && (
-              <UploadTrackAudioStep
-                audioName={audioName}
+              <UploadAlbumTracksStep
+                audioNames={audioNames}
                 onFileInputChange={onAudioFileInputChange}
                 isUploadButtonDisabled={false}
               />
@@ -156,4 +145,4 @@ const UploadTrack: React.FC<UploadTrackProps> = ({ closeModal }) => {
   );
 };
 
-export default UploadTrack;
+export default UploadAlbum;
