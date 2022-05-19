@@ -5,6 +5,7 @@ const initialState: TracksState = {
   total: 0,
   error: null,
   loading: false,
+  uploadTrackLoading: false,
   specificTrack: null,
   commentOperationLoading: false,
 };
@@ -17,6 +18,8 @@ export const tracksReducer = (state = initialState, action: TracksAction): Track
       return { ...state, total: action.payload };
     case TracksActionTypes.SET_LOADING:
       return { ...state, loading: action.payload };
+    case TracksActionTypes.SET_UPLOAD_TRACK_LOADING:
+      return { ...state, uploadTrackLoading: action.payload };
     case TracksActionTypes.SET_ERROR:
       return { ...state, error: action.payload };
     case TracksActionTypes.SET_SPECIFIC_TRACK:

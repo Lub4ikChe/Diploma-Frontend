@@ -32,6 +32,13 @@ export const setTracksLoading = (loading: boolean): TracksAction => {
   };
 };
 
+export const setUploadTrackLoading = (uploadLoading: boolean): TracksAction => {
+  return {
+    type: TracksActionTypes.SET_UPLOAD_TRACK_LOADING,
+    payload: uploadLoading,
+  };
+};
+
 export const setTracksError = (error: Error): TracksAction => {
   return {
     type: TracksActionTypes.SET_ERROR,
@@ -101,6 +108,30 @@ export const updateTrack =
       dispatch(setTracksError(error.response.data.message));
     } finally {
       dispatch(setTracksLoading(false));
+    }
+    return response;
+  };
+
+export const uploadTrack =
+  (trackName: string, trackText: string, trackImageFile: File, trackAudioFile: File) =>
+  async (
+    dispatch: Dispatch<TracksAction | UserAuthAction>,
+  ): Promise<AxiosResponse<Track> | undefined> => {
+    let response;
+    try {
+      dispatch(setUploadTrackLoading(true));
+
+      response = await TracksService.uploadTrack(
+        trackName,
+        trackText,
+        trackImageFile,
+        trackAudioFile,
+      );
+      const getMeResponse = await UserService.getMe();
+
+      dispatch(setUser(getMeResponse.data));
+    } finally {
+      dispatch(setUploadTrackLoading(false));
     }
     return response;
   };

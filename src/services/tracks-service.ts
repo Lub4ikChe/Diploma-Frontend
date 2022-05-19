@@ -26,6 +26,20 @@ export default class TracksService {
     return $api.put<Track>(`track/${trackId}`, { name: trackName, text: trackText });
   }
 
+  static async uploadTrack(
+    trackName: string,
+    trackText: string,
+    trackImageFile: File,
+    trackAudioFile: File,
+  ): Promise<AxiosResponse<Track>> {
+    const formData = new FormData();
+    formData.append('name', trackName);
+    formData.append('text', trackText);
+    formData.append('image', trackImageFile);
+    formData.append('audio', trackAudioFile);
+    return $api.post<Track>('track', formData);
+  }
+
   static async deleteTrack(trackId: string): Promise<AxiosResponse<Track>> {
     return $api.delete<Track>(`track/${trackId}`);
   }
