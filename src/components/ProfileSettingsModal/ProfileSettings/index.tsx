@@ -1,19 +1,15 @@
 import React from 'react';
 
-import { Box, Typography, Button } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 import { StyledDivider } from '../../Divider';
-import {
-  StyledTextField,
-  StyledAvatar,
-  StyledUploadButton,
-  StyledSaveButton,
-  StyledDeleteIcon,
-} from './styles';
+import { StyledTextField, StyledAvatar, StyledSaveButton, StyledDeleteIcon } from './styles';
 import CloseHeaderModal from '../../Modal/CloseHeaderModal';
 import ErrorAlert from '../../ErrorAlert';
+import FileUpload from '../../FileUpload';
 
 import { ProfileSettingsProps } from './types';
+import { AcceptUploadFiles } from '../../FileUpload/types';
 
 import { useTypedSelector } from '../../../hooks/use-typed-selector';
 import { useActions } from '../../../hooks/use-actions';
@@ -84,23 +80,12 @@ const ProfileSettings: React.FC<ProfileSettingsProps> = ({ closeModal }) => {
           <Typography variant="h6" component="h2">
             Upload your profile image
           </Typography>
-          <label htmlFor="contained-button-file">
-            <input
-              style={{ display: 'none' }}
-              accept="image/*"
-              id="contained-button-file"
-              type="file"
-              onChange={onFileInputChange}
-            />
-            <Button
-              disabled={isChoosePhotoButtonDisabled}
-              style={StyledUploadButton}
-              variant="contained"
-              component="span"
-            >
-              Choose image
-            </Button>
-          </label>
+          <FileUpload
+            onFileInputChange={onFileInputChange}
+            isUploadButtonDisabled={isChoosePhotoButtonDisabled}
+            label="Choose image"
+            accept={AcceptUploadFiles.IMAGE}
+          />
         </Box>
       </Box>
       <StyledDivider />
