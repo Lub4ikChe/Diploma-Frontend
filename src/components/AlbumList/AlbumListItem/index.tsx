@@ -3,19 +3,37 @@ import { useNavigate } from 'react-router-dom';
 
 import { Box, CardActionArea, Typography } from '@mui/material';
 import { StyledLink, StyledCard, StyledBoxWrapper, StyledCardContent } from './styles';
+import SnackBar from '../../SnackBar';
 
 import { AlbumListItemProps } from './types';
 import { routerLinks } from '../../../router/router-links.enum';
 
+import { useTypedSelector } from '../../../hooks/use-typed-selector';
+
 const AlbumListItem: React.FC<AlbumListItemProps> = ({ album }) => {
+  const [showNotLogInAlert, setShowNotLogInAlert] = React.useState<boolean>(false);
+
   const navigate = useNavigate();
+  const { isAuth } = useTypedSelector(state => state.userAuth);
+
+  const hideNotLogInAlert = (): void => setShowNotLogInAlert(false);
 
   const onAlbumClick = (albumId: string): void => {
-    navigate(`${routerLinks.ALBUMS}/${albumId}`);
+    if (!isAuth) {
+      setShowNotLogInAlert(true);
+    } else {
+      navigate(`${routerLinks.ALBUMS}/${albumId}`);
+    }
   };
 
   return (
     <StyledCard>
+      <SnackBar
+        open={showNotLogInAlert}
+        onClose={hideNotLogInAlert}
+        text="Please login in order to open this page"
+        severity="warning"
+      />
       <CardActionArea onClick={() => onAlbumClick(album.id)}>
         <StyledBoxWrapper p={2}>
           <Box
