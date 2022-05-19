@@ -5,28 +5,48 @@ import { Grid, Box } from '@mui/material';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
 
 import { StyledGrid, StyledLink, StyledIconButton } from './styles';
+import SnackBar from '../../SnackBar';
 
 import { TrackListItemProps } from './types';
 import { routerLinks } from '../../../router/router-links.enum';
 
 import { useActions } from '../../../hooks/use-actions';
+import { useTypedSelector } from '../../../hooks/use-typed-selector';
 
 const TrackListItems: React.FC<TrackListItemProps> = ({ track, hashNumber }) => {
   const [isHovered, setIsHovered] = React.useState<boolean>(false);
-  const navigate = useNavigate();
+  const [showNotLogInAlert, setShowNotLogInAlert] = React.useState<boolean>(false);
 
+  const navigate = useNavigate();
+  const { isAuth } = useTypedSelector(state => state.userAuth);
   const { setActiveTrack } = useActions();
+
+  const hideNotLogInAlert = (): void => setShowNotLogInAlert(false);
 
   const mouseMoveHandler = (): void => {
     setIsHovered(prev => !prev);
   };
 
-  const onTrackImageCLick = (): void => {
-    navigate(`${routerLinks.TRACKS}/${track.id}`);
-  };
-
   const stopPropagationOnClick = (event: React.MouseEvent<HTMLElement>): void => {
     event.stopPropagation();
+  };
+
+  const onTrackLinkOrImageCLick = (event: React.MouseEvent<HTMLElement>): void => {
+    stopPropagationOnClick(event);
+    if (!isAuth) {
+      setShowNotLogInAlert(true);
+    } else {
+      navigate(`${routerLinks.TRACKS}/${track.id}`);
+    }
+  };
+
+  const onTrackAlbumCLick = (event: React.MouseEvent<HTMLElement>): void => {
+    stopPropagationOnClick(event);
+    if (!isAuth) {
+      setShowNotLogInAlert(true);
+    } else {
+      navigate(`${routerLinks.ALBUMS}/${track?.album?.id}`);
+    }
   };
 
   const onPlayClick = (): void => {
@@ -43,6 +63,12 @@ const TrackListItems: React.FC<TrackListItemProps> = ({ track, hashNumber }) => 
       p={1}
       pl={3}
     >
+      <SnackBar
+        open={showNotLogInAlert}
+        onClose={hideNotLogInAlert}
+        text="Please login in order to open this page"
+        severity="warning"
+      />
       <Grid item xs={0.6}>
         {isHovered ? (
           <StyledIconButton color="inherit">
@@ -62,14 +88,14 @@ const TrackListItems: React.FC<TrackListItemProps> = ({ track, hashNumber }) => 
             src={track.image.url}
             alt={track.name}
             crossOrigin="anonymous"
-            onClick={onTrackImageCLick}
+            onClick={onTrackLinkOrImageCLick}
             style={{ cursor: 'pointer' }}
           />
           <Box ml={2} onClick={stopPropagationOnClick}>
-            <StyledLink to={`${routerLinks.TRACKS}/${track.id}`}>{track.name}</StyledLink>
+            <StyledLink onClick={onTrackLinkOrImageCLick}>{track.name}</StyledLink>
             <Box>
               {track.uploadedBy.information ? (
-                <StyledLink to={`${routerLinks.AUTHORS}/${track.uploadedBy.id}`}>
+                <StyledLink onClick={onTrackLinkOrImageCLick}>
                   {track.uploadedBy.information.name}
                 </StyledLink>
               ) : (
@@ -81,12 +107,7 @@ const TrackListItems: React.FC<TrackListItemProps> = ({ track, hashNumber }) => 
       </Grid>
       <Grid item xs={3}>
         {track.album ? (
-          <StyledLink
-            onClick={stopPropagationOnClick}
-            to={`${routerLinks.ALBUMS}/${track.album.id}`}
-          >
-            {track.album.name}
-          </StyledLink>
+          <StyledLink onClick={onTrackAlbumCLick}>{track.album.name}</StyledLink>
         ) : (
           '-'
         )}

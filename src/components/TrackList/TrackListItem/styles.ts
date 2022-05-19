@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 
-import { Grid, IconButton } from '@mui/material';
-import { NavLink } from 'react-router-dom';
+import { Grid, IconButton, Link } from '@mui/material';
 
 export const StyledGrid = styled(Grid)`
   :hover {
@@ -10,7 +9,7 @@ export const StyledGrid = styled(Grid)`
   }
 `;
 
-export const StyledLink = styled(NavLink)`
+export const StyledLink = styled(Link)`
   color: white;
   font-size: 16px;
   text-decoration: none;
