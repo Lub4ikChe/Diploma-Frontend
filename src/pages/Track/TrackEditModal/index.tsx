@@ -42,7 +42,7 @@ const TrackEditModal: React.FC<TrackEditModalProps> = ({ open, onClose, track })
     setTracksError(null);
   };
 
-  const saveButtonDisabled = !name.length || !text.length || loading;
+  const saveButtonDisabled = !name.length || loading;
 
   return (
     <Modal open={open} onClose={onCloseHandler}>
