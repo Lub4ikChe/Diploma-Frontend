@@ -32,6 +32,13 @@ export const setAlbumsLoading = (loading: boolean): AlbumsAction => {
   };
 };
 
+export const setUploadAlbumLoading = (loading: boolean): AlbumsAction => {
+  return {
+    type: AlbumsActionTypes.SET_UPLOAD_ALBUM_LOADING,
+    payload: loading,
+  };
+};
+
 export const setAlbumsError = (error: Error): AlbumsAction => {
   return {
     type: AlbumsActionTypes.SET_ERROR,
@@ -62,6 +69,25 @@ export const getAlbums =
     } finally {
       dispatch(setAlbumsLoading(false));
     }
+  };
+
+export const uploadAlbum =
+  (albumName: string, albumImageFile: File, tracksFiles: FileList) =>
+  async (
+    dispatch: Dispatch<AlbumsAction | UserAuthAction>,
+  ): Promise<AxiosResponse<Album> | undefined> => {
+    let response;
+    try {
+      dispatch(setUploadAlbumLoading(true));
+
+      response = await AlbumsService.uploadAlbum(albumName, albumImageFile, tracksFiles);
+      const getMeResponse = await UserService.getMe();
+
+      dispatch(setUser(getMeResponse.data));
+    } finally {
+      dispatch(setUploadAlbumLoading(false));
+    }
+    return response;
   };
 
 export const deleteAlbum =

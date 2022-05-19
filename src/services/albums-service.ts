@@ -29,4 +29,18 @@ export default class AlbumsService {
       name: albumName,
     });
   }
+
+  static async uploadAlbum(
+    albumName: string,
+    imageFile: File,
+    tracksFiles: FileList,
+  ): Promise<AxiosResponse<Album>> {
+    const formData = new FormData();
+    formData.append('name', albumName);
+    formData.append('image', imageFile);
+    Array.from(tracksFiles).forEach(file => {
+      formData.append('audio', file);
+    });
+    return $api.post<Album>('album', formData);
+  }
 }
