@@ -13,7 +13,7 @@ import { routerLinks } from '../../../router/router-links.enum';
 import { useActions } from '../../../hooks/use-actions';
 import { useTypedSelector } from '../../../hooks/use-typed-selector';
 
-const TrackListItems: React.FC<TrackListItemProps> = ({ track, hashNumber }) => {
+const TrackListItem: React.FC<TrackListItemProps> = ({ track, hashNumber }) => {
   const [isHovered, setIsHovered] = React.useState<boolean>(false);
   const [showNotLogInAlert, setShowNotLogInAlert] = React.useState<boolean>(false);
 
@@ -46,6 +46,15 @@ const TrackListItems: React.FC<TrackListItemProps> = ({ track, hashNumber }) => 
       setShowNotLogInAlert(true);
     } else {
       navigate(`${routerLinks.ALBUMS}/${track?.album?.id}`);
+    }
+  };
+
+  const onTrackAuthorCLick = (event: React.MouseEvent<HTMLElement>): void => {
+    stopPropagationOnClick(event);
+    if (!isAuth) {
+      setShowNotLogInAlert(true);
+    } else {
+      navigate(`${routerLinks.AUTHORS}/${track?.uploadedBy?.id}`);
     }
   };
 
@@ -95,7 +104,7 @@ const TrackListItems: React.FC<TrackListItemProps> = ({ track, hashNumber }) => 
             <StyledLink onClick={onTrackLinkOrImageCLick}>{track.name}</StyledLink>
             <Box>
               {track.uploadedBy.information ? (
-                <StyledLink onClick={onTrackLinkOrImageCLick}>
+                <StyledLink onClick={onTrackAuthorCLick}>
                   {track.uploadedBy.information.name}
                 </StyledLink>
               ) : (
@@ -122,4 +131,4 @@ const TrackListItems: React.FC<TrackListItemProps> = ({ track, hashNumber }) => 
   );
 };
 
-export default TrackListItems;
+export default TrackListItem;

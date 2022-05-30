@@ -8,7 +8,7 @@ import { AddAlbumInfoStepProps } from './types';
 const AddAlbumInfoStep: React.FC<AddAlbumInfoStepProps> = ({ name, onNameChange }) => {
   return (
     <Grid container direction="column">
-      <Typography variant="h4">Fill track information</Typography>
+      <Typography variant="h4">Fill album information</Typography>
       <FormTextField
         fullWidth
         label="Album name"
